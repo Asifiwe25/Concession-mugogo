@@ -1,0 +1,51 @@
+{
+  "app": { "name": "Concession Mugogo", "tagline": "Busimamizi bw'Ukulima" },
+  "nav": {
+    "dashboard": "Ikiongozi", "employees": "Ababenzi", "concessions": "Ibirima",
+    "zones": "Indangaguriro", "livestock": "Amasho", "crops": "Indimwa",
+    "harvests": "Inkoro", "stock": "Ndora", "machines": "Imashini",
+    "tasks": "Imirimo", "finance": "Amafaranga", "alerts": "Ibitangazo",
+    "reports": "Raporo", "settings": "Amategeko", "audit": "Genzura",
+    "hr": "Ababenzi", "territory": "Inyabutaka", "resources": "Ibikoresho",
+    "animals": "Inyamá"
+  },
+  "auth": {
+    "login": "Injira", "logout": "Funga", "register": "Andikisha",
+    "email": "Imeyili", "phone": "Telefono", "password": "Ijambo ry'ibanga",
+    "confirmPassword": "Emeza ijambo", "rememberMe": "Ninkumbuke",
+    "forgotPassword": "Nasanze ijambo?", "resetPassword": "Hindura ijambo",
+    "fullName": "Izina ryose", "language": "Ururimi", "farmName": "Izina ry'ikirima",
+    "welcomeBack": "Karibu", "loginSubtitle": "Injira mu kibanza cawe",
+    "noAccount": "Nta konti ufite?", "hasAccount": "Ufite konti?",
+    "loginError": "Imeyili cyangwa ijambo si ngombwa", "inviteCode": "Kode y'ubwami"
+  },
+  "dashboard": {
+    "title": "Ikiongozi", "welcome": "Mwiriwe", "overview": "Incamake",
+    "today": "Uyu munsi", "thisMonth": "Uku kwezi", "employees": "Ababenzi",
+    "activeToday": "bakora uyu munsi", "animals": "Inyamá", "healthy": "barakira",
+    "crops": "Indimwa", "active": "zirakora", "revenue": "Inyungu",
+    "expenses": "Ibisoreshwa", "profit": "Inyungu nziza", "area": "Ubutaka",
+    "recentAlerts": "Ibitangazo bishya", "quickActions": "Ibikorwa byihuse",
+    "addAnimal": "Ongereza inyamá", "addCrop": "Ongereza indimwa",
+    "addTask": "Hanga imirimo", "viewReports": "Reba raporo"
+  },
+  "common": {
+    "save": "Bika", "cancel": "Hagarika", "delete": "Siba", "edit": "Hindura",
+    "view": "Reba", "add": "Ongereza", "search": "Shakisha", "filter": "Shungura",
+    "export": "Sohereza", "import": "Injiza", "loading": "Birashakishwa...",
+    "noData": "Nta makuru", "confirm": "Emeza", "back": "Garuka",
+    "next": "Komeza", "previous": "Iyabanjirije", "finish": "Rangiza",
+    "close": "Funga", "yes": "Yego", "no": "Oya", "actions": "Ibikorwa",
+    "required": "Iki gice gisabwa", "error": "Habaye ikibazo",
+    "success": "Byagenze neza", "step": "Intambwe", "all": "Byose",
+    "new": "Gishya", "active": "Birakora", "days": "iminsi", "months": "amezi",
+    "years": "imyaka"
+  },
+  "roles": {
+    "super_admin": "Umuyobozi Mukuru", "director": "Umuyobozi",
+    "livestock_manager": "Umuyobozi w'Amasho", "farm_manager": "Umuyobozi w'Ikirima",
+    "hr_manager": "Umuyobozi wa Ababenzi", "accountant": "Umuturanyi",
+    "vet": "Muganga w'Inyamá", "shepherd": "Umwise",
+    "farmer": "Umukulima", "visitor": "Mugenzi"
+  }
+}

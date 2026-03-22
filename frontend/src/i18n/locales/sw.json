@@ -1,0 +1,48 @@
+{
+  "app": { "name": "Concession Mugogo", "tagline": "Usimamizi wa Kilimo Jumuishi" },
+  "nav": {
+    "dashboard": "Dashibodi", "employees": "Wafanyakazi", "concessions": "Mashamba",
+    "zones": "Maeneo", "livestock": "Mifugo", "crops": "Mazao", "harvests": "Mavuno",
+    "stock": "Hifadhi", "machines": "Mashine", "tasks": "Kazi", "finance": "Fedha",
+    "alerts": "Tahadhari", "reports": "Ripoti", "settings": "Mipangilio", "audit": "Ukaguzi",
+    "hr": "Rasilimali Watu", "territory": "Eneo", "resources": "Rasilimali", "animals": "Wanyama"
+  },
+  "auth": {
+    "login": "Ingia", "logout": "Toka", "register": "Jisajili", "email": "Barua pepe",
+    "phone": "Simu", "password": "Nywila", "confirmPassword": "Thibitisha nywila",
+    "rememberMe": "Nikumbuke", "forgotPassword": "Umesahau nywila?",
+    "resetPassword": "Weka upya nywila", "fullName": "Jina kamili",
+    "language": "Lugha inayopendelewa", "farmName": "Jina la shamba",
+    "welcomeBack": "Karibu tena", "loginSubtitle": "Ingia katika nafasi yako",
+    "noAccount": "Huna akaunti bado?", "hasAccount": "Una akaunti tayari?",
+    "loginError": "Barua pepe au nywila si sahihi", "inviteCode": "Nambari ya mwaliko"
+  },
+  "dashboard": {
+    "title": "Dashibodi", "welcome": "Habari", "overview": "Muhtasari",
+    "today": "Leo", "thisMonth": "Mwezi huu", "employees": "Wafanyakazi",
+    "activeToday": "wanaofanya kazi leo", "animals": "Wanyama", "healthy": "wazima",
+    "crops": "Mazao", "active": "yanayofanya kazi", "revenue": "Mapato",
+    "expenses": "Matumizi", "profit": "Faida", "area": "Eneo",
+    "recentAlerts": "Tahadhari za hivi karibuni", "quickActions": "Vitendo vya haraka",
+    "addAnimal": "Ongeza mnyama", "addCrop": "Ongeza zao", "addTask": "Unda kazi",
+    "viewReports": "Ona ripoti"
+  },
+  "common": {
+    "save": "Hifadhi", "cancel": "Ghairi", "delete": "Futa", "edit": "Hariri",
+    "view": "Ona", "add": "Ongeza", "search": "Tafuta", "filter": "Chuja",
+    "export": "Hamisha", "import": "Ingiza", "loading": "Inapakia...",
+    "noData": "Hakuna data", "confirm": "Thibitisha", "back": "Rudi",
+    "next": "Endelea", "previous": "Iliyopita", "finish": "Maliza",
+    "close": "Funga", "yes": "Ndiyo", "no": "Hapana", "actions": "Vitendo",
+    "required": "Sehemu hii inahitajika", "error": "Hitilafu imetokea",
+    "success": "Amefanikiwa", "step": "Hatua", "all": "Zote", "new": "Mpya",
+    "active": "Amiri", "days": "siku", "months": "miezi", "years": "miaka"
+  },
+  "roles": {
+    "super_admin": "Msimamizi Mkuu", "director": "Mkurugenzi",
+    "livestock_manager": "Msimamizi wa Mifugo", "farm_manager": "Msimamizi wa Shamba",
+    "hr_manager": "Msimamizi wa Rasilimali", "accountant": "Mhasibu",
+    "vet": "Daktari wa Mifugo", "shepherd": "Mchungaji",
+    "farmer": "Mkulima", "visitor": "Mgeni"
+  }
+}
