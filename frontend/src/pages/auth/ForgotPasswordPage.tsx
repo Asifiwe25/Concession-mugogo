@@ -95,7 +95,7 @@ export default function ForgotPasswordPage() {
                 <label style={{ display: 'block', fontSize: '.72rem', fontWeight: 700, color: 'var(--muted)', marginBottom: '.3rem', textTransform: 'uppercase', letterSpacing: '.04em' }}>Email</label>
                 <div style={{ position: 'relative' }}>
                   <Mail size={14} style={{ position: 'absolute', left: '11px', top: '50%', transform: 'translateY(-50%)', color: 'var(--light)' }}/>
-                  <input type="email" value={email} onChange={e => { setEmail(e.target.value); setError('') }} placeholder="richardbunani2013@gmail.com" className="inp3"/>
+                  <input type="email" value={email} onChange={e => { setEmail(e.target.value); setError('') }} placeholder="alicebunani5@gmail.com" className="inp3"/>
                 </div>
               </div>
               <button onClick={submitEmail} disabled={loading}

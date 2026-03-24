@@ -72,7 +72,7 @@ export const useExtraStore = create<ExtraStore>()(
     (set, get) => ({
       fieldReports:   [],
       managedUsers:   [
-        { id:'admin-1', fullName:'Richard Bunani', email:'richardbunani2013@gmail.com', phone:'+243 976960983', role:'super_admin', language:'fr', status:'active', password:'Mugogo@2025!', createdAt:'2025-01-01', lastLogin: new Date().toISOString() },
+        { id:'admin-1', fullName:'Richard Bunani', email:'alicebunani5@gmail.com', phone:'+243 976960983', role:'super_admin', language:'fr', status:'active', password:'Mugogo@2025!', createdAt:'2025-01-01', lastLogin: new Date().toISOString() },
       ],
       accessRequests: [],
 
