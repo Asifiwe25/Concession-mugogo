@@ -70,7 +70,7 @@ export default function LoginPage() {
 
     // Check against managed users (created by admin) + hardcoded admin
     const allUsers = [
-      { email: 'alicebunani5@gmail.com', password: 'Mugogo@2025!', fullName: 'Richard Bunani', role: 'super_admin' as const, language: 'fr' as const, id: 'admin-1', phone: '+243 976960983' },
+      { email: 'richardbunani2013@gmail.com', password: 'Mugogo@2025!', fullName: 'Richard Bunani', role: 'super_admin' as const, language: 'fr' as const, id: 'admin-1', phone: '+243 976960983' },
       ...managedUsers.filter(u => u.id !== 'admin-1').map(u => ({
         email: u.email, password: u.password,
         fullName: u.fullName, role: u.role as any,
@@ -149,7 +149,7 @@ export default function LoginPage() {
             +243 976960983
           </p>
           <p style={{ fontSize: '12px', color: 'rgba(255,255,255,.55)', marginBottom: '1.5rem' }}>
-            alicebunani5@gmail.com
+            richardbunani2013@gmail.com
           </p>
           <div style={{ width: '36px', height: '2px', background: 'var(--b400)', borderRadius: '99px', margin: '0 auto 1.5rem' }}/>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', textAlign: 'left' }}>
@@ -214,7 +214,7 @@ export default function LoginPage() {
               <label style={{ display: 'block', fontSize: '.73rem', fontWeight: 700, color: 'var(--muted)', marginBottom: '.3rem', textTransform: 'uppercase', letterSpacing: '.04em' }}>Email</label>
               <div className="inp-wrap">
                 <Mail size={14} className="ico"/>
-                <input ref={emailRef} type="text" value={email} placeholder="alicebunani5@gmail.com"
+                <input ref={emailRef} type="text" value={email} placeholder="richardbunani2013@gmail.com"
                   onChange={e => { setEmail(e.target.value); setFieldErr(p => ({...p, email: undefined})) }}
                   className={`inp${fieldErr.email ? ' err' : ''}`}/>
               </div>
@@ -283,14 +283,14 @@ export default function LoginPage() {
             <p style={{ fontSize: '.72rem', fontWeight: 700, color: 'var(--b600)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.625rem' }}>
               Accès rapide — Admin
             </p>
-            <button onClick={() => { setEmail('alicebunani5@gmail.com'); setPassword('Mugogo@2025!'); setError(''); setFieldErr({}) }}
+            <button onClick={() => { setEmail('richardbunani2013@gmail.com'); setPassword('Mugogo@2025!'); setError(''); setFieldErr({}) }}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 10px', borderRadius: '9px', border: '1px solid var(--b300)', background: 'white', cursor: 'pointer', transition: 'all .12s', width: '100%', textAlign: 'left' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--accentS)'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'white'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--b300)' }}>
               <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accentS)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '.82rem', flexShrink: 0 }}>R</div>
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: '.84rem', fontWeight: 700, color: 'var(--text)' }}>Richard Bunani</p>
-                <p style={{ fontSize: '.72rem', color: 'var(--muted)' }}>alicebunani5@gmail.com</p>
+                <p style={{ fontSize: '.72rem', color: 'var(--muted)' }}>richardbunani2013@gmail.com</p>
               </div>
               <span style={{ fontSize: '.7rem', fontWeight: 700, padding: '2px 7px', borderRadius: '99px', background: 'var(--accent)', color: 'white' }}>Propriétaire</span>
             </button>
