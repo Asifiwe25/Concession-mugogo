@@ -402,7 +402,7 @@ function PublicReportForm() {
       </button>
 
       <p style={{ textAlign: 'center', fontSize: '.78rem', color: 'var(--light)' }}>
-        Votre rapport sera reçu sur le tableau de bord, WhatsApp +243 976960983 et richardbunani2013@gmail.com
+        Votre rapport sera reçu sur le tableau de bord, WhatsApp +243 976960983 et alicebunani5@gmail.com
       </p>
     </div>
   )
@@ -798,7 +798,7 @@ export default function HomePage() {
                     {reportType === 'text' ? 'Rapport écrit' : reportType === 'voice' ? 'Message vocal' : 'Rapport vidéo'}
                   </h3>
                   <p style={{ fontSize: '.82rem', color: 'var(--muted)', marginTop: '2px' }}>
-                    Sera envoyé à Richard Bunani — tableau de bord, WhatsApp +243 976960983, email richardbunani2013@gmail.com
+                    Sera envoyé à Richard Bunani — tableau de bord, WhatsApp +243 976960983, email alicebunani5@gmail.com
                   </p>
                 </div>
                 <button onClick={() => setReportOpen(false)}
@@ -816,7 +816,7 @@ export default function HomePage() {
             <div style={{ flex: 1 }}>
               <p style={{ fontWeight: 700, fontSize: '.95rem', color: 'var(--text)' }}>Richard Bunani — Propriétaire de la Concession Mugogo</p>
               <p style={{ fontSize: '.84rem', color: 'var(--muted)', marginTop: '3px' }}>
-                WhatsApp &amp; Tél : <strong>+243 976960983</strong> · Email : <strong>richardbunani2013@gmail.com</strong>
+                WhatsApp &amp; Tél : <strong>+243 976960983</strong> · Email : <strong>alicebunani5@gmail.com</strong>
               </p>
             </div>
           </div>

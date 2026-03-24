@@ -316,7 +316,7 @@ function ReportGeneratorModal({ rpt, onClose }: { rpt: typeof REPORT_DEFS[0]; on
       `CONCESSION MUGOGO — ${rpt.title.toUpperCase()} ${periodLabel.toUpperCase()}`,
       `Propriétaire : Richard Bunani`,
       `Walungu, Sud-Kivu, République Démocratique du Congo`,
-      `Contact : +243 976960983 | richardbunani2013@gmail.com`,
+      `Contact : +243 976960983 | alicebunani5@gmail.com`,
       `Superficie : 9 hectares`,
       ``,
       `Période : Du ${dateFrom} au ${dateTo}`,
@@ -328,7 +328,7 @@ function ReportGeneratorModal({ rpt, onClose }: { rpt: typeof REPORT_DEFS[0]; on
       ``,
       `Pour toute question, contacter Richard Bunani :`,
       `Tél/WhatsApp : +243 976960983`,
-      `Email : richardbunani2013@gmail.com`,
+      `Email : alicebunani5@gmail.com`,
     ].join('\n')
     const blob = new Blob([content], { type: 'text/plain' })
     const url  = URL.createObjectURL(blob)
@@ -754,7 +754,7 @@ export function SettingsPage() {
               </div>
               <div className="form-grid">
                 <div><label className="label">Nom complet</label><input className="input" defaultValue={currentUser?.fullName||'Richard Bunani'}/></div>
-                <div><label className="label">Email</label><input className="input" defaultValue={currentUser?.email||'richardbunani2013@gmail.com'}/></div>
+                <div><label className="label">Email</label><input className="input" defaultValue={currentUser?.email||'alicebunani5@gmail.com'}/></div>
               </div>
               <div className="form-grid">
                 <div><label className="label">Téléphone</label><input className="input" defaultValue="+243 976960983"/></div>
@@ -907,7 +907,7 @@ export function SettingsPage() {
                 <div><label className="label">Téléphone principal</label><input className="input" defaultValue="+243 976960983"/></div>
               </div>
               <div className="form-grid">
-                <div><label className="label">Email principal</label><input className="input" defaultValue="richardbunani2013@gmail.com"/></div>
+                <div><label className="label">Email principal</label><input className="input" defaultValue="alicebunani5@gmail.com"/></div>
                 <div><label className="label">Localisation</label><input className="input" defaultValue="Walungu, Sud-Kivu, RDC"/></div>
               </div>
               <div className="form-grid">
