@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/context/authStore'
-import { useExtraStore } from '@/store/extraStore'
+import { useExtraStore, useHomeStore } from '@/store/extraStore'
 import {
   ArrowRight, ChevronDown, BarChart3, Users, Package, Sprout,
   Shield, Globe, CheckCircle, Play, Star, TrendingUp, MapPin,
@@ -450,6 +451,8 @@ function TypeWriter({ words, speed = 80 }: { words: string[]; speed?: number }) 
 export default function HomePage() {
   const navigate    = useNavigate()
   const { isAuthenticated } = useAuthStore()
+  const { i18n } = useTranslation()
+  const { homeContent } = useHomeStore()
   const [navSolid,  setNavSolid]   = useState(false)
   const [activeTest, setActiveTest] = useState(0)
   const [reportOpen, setReportOpen] = useState(false)
@@ -568,7 +571,7 @@ export default function HomePage() {
           </h1>
           <h1 className="h2" style={{ fontFamily: 'Georgia,serif', fontSize: 'clamp(2.2rem,5.5vw,4.2rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '1.375rem', letterSpacing: '-.025em' }}>
             <span style={{ color: 'var(--accent)', position: 'relative', display: 'inline-block' }}>
-              Concession Mugogo
+              {homeContent.heroSubtitle}
               <span style={{ position: 'absolute', bottom: '3px', left: 0, right: 0, height: '3px', background: 'var(--b200)', borderRadius: '99px', overflow: 'hidden' }}>
                 <span style={{ position: 'absolute', inset: 0, background: 'var(--accent)', borderRadius: '99px', animation: 'shimmer 2.8s 1.4s ease-in-out infinite' }}/>
               </span>
@@ -622,8 +625,7 @@ export default function HomePage() {
               À propos
             </div>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 'clamp(1.6rem,3.5vw,2.5rem)', fontWeight: 700, color: 'var(--text)', marginBottom: '1.125rem', lineHeight: 1.2 }}>
-              La Concession Mugogo,<br/>
-              <span style={{ color: 'var(--accent)' }}>une exploitation moderne</span>
+              {homeContent.aboutTitle}
             </h2>
             <p style={{ fontSize: '.95rem', color: 'var(--muted)', lineHeight: 1.75, marginBottom: '1.25rem' }}>
               Fondée et dirigée par <strong style={{ color: 'var(--text)' }}>Richard Bunani</strong>, la Concession Mugogo est une exploitation agro-pastorale intégrée située à <strong>Walungu, dans le Sud-Kivu</strong>, en République Démocratique du Congo.
@@ -673,7 +675,7 @@ export default function HomePage() {
       </section>
 
       {/* ── STATS BAND ── */}
-      <section style={{ background: 'var(--accent)', padding: '4rem clamp(1rem,6vw,4rem)' }}>
+      {homeContent.showStats && <section style={{ background: 'var(--accent)', padding: '4rem clamp(1rem,6vw,4rem)' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '2.5rem', textAlign: 'center' }}>
           {[
             { target: 9,   suffix: ' ha', label: 'Superficie de la concession', delay: '.05s' },
@@ -689,10 +691,10 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </section>}
 
       {/* ── FEATURES ── */}
-      <section style={{ padding: '6rem clamp(1rem,6vw,4rem)', maxWidth: '1200px', margin: '0 auto' }}>
+      {homeContent.showFeatures && <section style={{ padding: '6rem clamp(1rem,6vw,4rem)', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <div style={{ display: 'inline-block', background: 'var(--b100)', color: 'var(--b700)', fontSize: '10px', fontWeight: 700, padding: '4px 12px', borderRadius: '99px', border: '1px solid var(--b200)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '.07em' }}>
             Modules du système
@@ -709,7 +711,7 @@ export default function HomePage() {
             <FeatureCard key={i} icon={f.icon} title={f.title} desc={f.desc} delay={`${i * .06}s`}/>
           ))}
         </div>
-      </section>
+      </section>}
 
       {/* ── HOW IT WORKS ── */}
       <section style={{ background: 'var(--b100)', padding: '6rem clamp(1rem,6vw,4rem)' }}>
@@ -905,10 +907,10 @@ export default function HomePage() {
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </div>
           <h2 className="anim-fade-up" style={{ fontFamily: 'Georgia,serif', fontSize: 'clamp(1.7rem,4vw,2.75rem)', fontWeight: 700, color: 'white', marginBottom: '1rem', lineHeight: 1.2 }}>
-            Prêt à gérer la Concession Mugogo ?
+            {homeContent.ctaTitle}
           </h2>
           <p className="anim-fade-up d2" style={{ fontSize: '1rem', color: 'rgba(255,255,255,.68)', marginBottom: '2.25rem', lineHeight: 1.65 }}>
-            Connectez-vous maintenant avec votre compte ou demandez un accès à Richard Bunani.
+            {homeContent.ctaSubtitle}
           </p>
           <div className="anim-fade-up d3" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <MagneticBtn onClick={() => navigate('/connexion')}

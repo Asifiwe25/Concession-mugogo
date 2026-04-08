@@ -22,7 +22,9 @@
     "hr": "Ressources Humaines",
     "territory": "Territoire",
     "resources": "Ressources",
-    "animals": "Animaux"
+    "animals": "Animaux",
+    "homepage": "Page d'accueil (Admin)",
+    "home": "Page d'accueil"
   },
   "auth": {
     "login": "Connexion",
@@ -346,7 +348,8 @@
     "theme": "Thème",
     "currency": "Devise",
     "timezone": "Fuseau horaire",
-    "fiscalYear": "Année fiscale"
+    "fiscalYear": "Année fiscale",
+    "homepage": "Page d'accueil"
   },
   "audit": {
     "title": "Audit & Historique",
@@ -501,5 +504,21 @@
     "pump": "Pompe",
     "generator": "Générateur",
     "vehicle": "Véhicule"
+  },
+  "homepage": {
+    "manage": "Gestion de la page d'accueil",
+    "hero": "Section Hero",
+    "about": "À propos",
+    "stats": "Statistiques",
+    "features": "Modules & Fonctionnalités",
+    "testimonials": "Témoignages",
+    "contact": "Informations de contact",
+    "cta": "Appel à l'action",
+    "preview": "Prévisualiser",
+    "save": "Enregistrer les modifications",
+    "visibility": "Visibilité des sections",
+    "show": "Visible",
+    "hide": "Masqué",
+    "reset": "Réinitialiser"
   }
 }

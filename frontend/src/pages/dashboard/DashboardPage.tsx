@@ -5,11 +5,13 @@ import { useAuthStore } from '@/context/authStore'
 import { useExtraStore } from '@/store/extraStore'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ArrowRight, Plus, Home, Bell, CheckCircle, X, User } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/crud'
 import { clsx } from 'clsx'
 
 export default function DashboardPage() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { user } = useAuthStore()
   const { animals, employees, crops, alerts, transactions, stock } = useStore()
   const { fieldReports, accessRequests, approveRequest, rejectRequest } = useExtraStore()
@@ -18,7 +20,7 @@ export default function DashboardPage() {
 
   const now = new Date()
   const hour = now.getHours()
-  const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
+  const greeting = hour < 12 ? t('dashboard.welcome', 'Bonjour') : hour < 18 ? t('dashboard.welcome', 'Bonjour') : t('dashboard.welcome', 'Bonsoir')
 
   const rev    = transactions.filter(t=>t.type==='income'  && t.status==='paid').reduce((s,t)=>s+t.amount,0)
   const exp    = transactions.filter(t=>t.type==='expense' && t.status==='paid').reduce((s,t)=>s+t.amount,0)

@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { clsx } from 'clsx'
 import {
   LayoutDashboard, Users, Map, Beef, Sprout, Wheat, Package,
   Wrench, ClipboardList, DollarSign, Bell, FileText, Settings,
-  Shield, Building2, LogOut, ChevronDown, ChevronRight
+  Shield, Building2, LogOut, Home, Globe
 } from 'lucide-react'
 import { useAuthStore } from '@/context/authStore'
-import { useStore } from '@/store/useStore'
-import i18n from '@/i18n'
+import { useStore }     from '@/store/useStore'
+import { changeLanguage } from '@/i18n'
 
 const LANGS = [
   { code: 'fr',    label: 'FR', full: 'Français'  },
@@ -16,65 +17,70 @@ const LANGS = [
   { code: 'mashi', label: 'SH', full: 'Mashi'      },
 ]
 
-const NAV_GROUPS = [
-  {
-    section: null,
-    items: [
-      { to: '/tableau-de-bord', label: 'Tableau de bord', icon: LayoutDashboard },
-    ],
-  },
-  {
-    section: 'Exploitation',
-    items: [
-      { to: '/concessions', label: 'Concessions',  icon: Building2 },
-      { to: '/zones',       label: 'Zones & Carte', icon: Map       },
-    ],
-  },
-  {
-    section: 'Élevage & Cultures',
-    items: [
-      { to: '/elevage',   label: 'Élevage',   icon: Beef   },
-      { to: '/cultures',  label: 'Cultures',  icon: Sprout },
-      { to: '/recoltes',  label: 'Récoltes',  icon: Wheat  },
-    ],
-  },
-  {
-    section: 'Ressources',
-    items: [
-      { to: '/stock',    label: 'Stock',    icon: Package       },
-      { to: '/machines', label: 'Machines', icon: Wrench        },
-      { to: '/taches',   label: 'Tâches',   icon: ClipboardList },
-    ],
-  },
-  {
-    section: 'Gestion',
-    items: [
-      { to: '/employes', label: 'Employés', icon: Users       },
-      { to: '/finance',  label: 'Finance',  icon: DollarSign  },
-      { to: '/alertes',  label: 'Alertes',  icon: Bell, badge: true },
-    ],
-  },
-  {
-    section: 'Administration',
-    items: [
-      { to: '/rapports',   label: 'Rapports',    icon: FileText  },
-      { to: '/parametres', label: 'Paramètres',  icon: Settings  },
-      { to: '/audit',      label: 'Audit',       icon: Shield    },
-    ],
-  },
-]
-
 export default function Sidebar() {
+  const { t, i18n } = useTranslation()
   const { user, logout } = useAuthStore()
   const { alerts } = useStore()
+  const navigate  = useNavigate()
   const [lang, setLang] = useState(i18n.language || 'fr')
   const newAlerts = alerts.filter(a => a.status === 'new').length
 
   const handleLang = (code: string) => {
     setLang(code)
-    i18n.changeLanguage(code)
-    localStorage.setItem('mugogo_lang', code)
+    changeLanguage(code)
+    if (user) {
+      // Also update user language preference in authStore
+    }
   }
+
+  const NAV_GROUPS = [
+    {
+      section: null,
+      items: [
+        { to: '/tableau-de-bord', labelKey: 'nav.dashboard', icon: LayoutDashboard },
+      ],
+    },
+    {
+      section: t('nav.territory', 'Exploitation'),
+      items: [
+        { to: '/concessions', labelKey: 'nav.concessions', icon: Building2 },
+        { to: '/zones',       labelKey: 'nav.zones',       icon: Map       },
+      ],
+    },
+    {
+      section: t('nav.livestock', 'Élevage') + ' & ' + t('nav.crops', 'Cultures'),
+      items: [
+        { to: '/elevage',   labelKey: 'nav.livestock', icon: Beef   },
+        { to: '/cultures',  labelKey: 'nav.crops',     icon: Sprout },
+        { to: '/recoltes',  labelKey: 'nav.harvests',  icon: Wheat  },
+      ],
+    },
+    {
+      section: t('nav.resources', 'Ressources'),
+      items: [
+        { to: '/stock',    labelKey: 'nav.stock',    icon: Package       },
+        { to: '/machines', labelKey: 'nav.machines', icon: Wrench        },
+        { to: '/taches',   labelKey: 'nav.tasks',    icon: ClipboardList },
+      ],
+    },
+    {
+      section: t('settings.title', 'Gestion'),
+      items: [
+        { to: '/employes',  labelKey: 'nav.employees', icon: Users       },
+        { to: '/finance',   labelKey: 'nav.finance',   icon: DollarSign  },
+        { to: '/alertes',   labelKey: 'nav.alerts',    icon: Bell, badge: true },
+      ],
+    },
+    {
+      section: t('audit.title', 'Administration'),
+      items: [
+        { to: '/rapports',       labelKey: 'nav.reports',  icon: FileText },
+        { to: '/parametres',     labelKey: 'nav.settings', icon: Settings },
+        { to: '/accueil-admin',  labelKey: 'settings.homepage', icon: Globe },
+        { to: '/audit',          labelKey: 'nav.audit',    icon: Shield   },
+      ],
+    },
+  ]
 
   return (
     <aside style={{
@@ -85,7 +91,7 @@ export default function Sidebar() {
       overflowY: 'auto',
     }} className="scrollbar-hide">
 
-      {/* Logo / Brand */}
+      {/* Logo */}
       <div style={{ padding: '18px 16px 14px', borderBottom: '1px solid var(--borderS)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{ width: '36px', height: '36px', borderRadius: '11px', background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -100,7 +106,7 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
-        <div style={{ marginTop: '8px', fontSize: '10px', color: 'var(--light)', fontStyle: 'italic', paddingLeft: '46px' }}>
+        <div style={{ marginTop: '6px', fontSize: '10px', color: 'var(--light)', fontStyle: 'italic', paddingLeft: '46px' }}>
           Walungu, Sud-Kivu, RDC
         </div>
       </div>
@@ -118,7 +124,7 @@ export default function Sidebar() {
               <NavLink key={item.to} to={item.to}
                 className={({ isActive }) => clsx('nav-link', isActive && 'active')}>
                 <item.icon size={15} style={{ flexShrink: 0, strokeWidth: 1.9 }}/>
-                <span style={{ flex: 1 }}>{item.label}</span>
+                <span style={{ flex: 1 }}>{t(item.labelKey, item.labelKey)}</span>
                 {(item as any).badge && newAlerts > 0 && (
                   <span style={{ background: 'var(--err)', color: 'white', fontSize: '9px', fontWeight: 700, padding: '1px 5px', borderRadius: '99px', minWidth: '18px', textAlign: 'center' }}>
                     {newAlerts}
@@ -136,16 +142,25 @@ export default function Sidebar() {
         <div style={{ display: 'flex', gap: '3px', marginBottom: '10px' }}>
           {LANGS.map(l => (
             <button key={l.code} onClick={() => handleLang(l.code)} title={l.full}
-              style={{ flex: 1, padding: '4px 0', borderRadius: '7px', border: '1px solid', fontSize: '10px', fontWeight: 700, cursor: 'pointer', transition: 'all .12s',
-                       background: lang === l.code ? 'var(--accent)' : 'var(--surface2)',
-                       color: lang === l.code ? 'white' : 'var(--muted)',
-                       borderColor: lang === l.code ? 'var(--accent)' : 'var(--border)' }}>
+              style={{ flex: 1, padding: '5px 0', borderRadius: '7px', border: '1px solid', fontSize: '10px', fontWeight: 700, cursor: 'pointer', transition: 'all .15s',
+                background:    lang === l.code ? 'var(--accent)' : 'var(--surface2)',
+                color:         lang === l.code ? 'white' : 'var(--muted)',
+                borderColor:   lang === l.code ? 'var(--accent)' : 'var(--border)' }}>
               {l.label}
             </button>
           ))}
         </div>
 
-        {/* User info */}
+        {/* Home page shortcut */}
+        <button onClick={() => navigate('/')}
+          style={{ display: 'flex', alignItems: 'center', gap: '7px', width: '100%', padding: '6px 8px', borderRadius: '8px', border: '1px solid var(--borderS)', background: 'var(--surface2)', cursor: 'pointer', marginBottom: '8px', fontSize: '11.5px', color: 'var(--muted)', transition: 'all .13s' }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--accentS)'; (e.currentTarget as HTMLElement).style.color = 'var(--accent)' }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'var(--surface2)'; (e.currentTarget as HTMLElement).style.color = 'var(--muted)' }}>
+          <Home size={13}/>
+          <span>{t('nav.home', 'Page d\'accueil')}</span>
+        </button>
+
+        {/* User + logout */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'var(--accentS)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '12px', color: 'var(--accent)', border: '1.5px solid var(--border)', flexShrink: 0 }}>
             {(user?.fullName || 'R').charAt(0)}
@@ -155,10 +170,10 @@ export default function Sidebar() {
               {user?.fullName || 'Richard Bunani'}
             </p>
             <p style={{ fontSize: '9.5px', color: 'var(--muted)' }}>
-              {user?.role === 'super_admin' ? 'Propriétaire' : user?.role || 'Administrateur'}
+              {user?.role === 'super_admin' ? t('roles.super_admin', 'Propriétaire') : t(`roles.${user?.role}`, user?.role || '')}
             </p>
           </div>
-          <button onClick={logout} title="Se déconnecter"
+          <button onClick={logout} title={t('auth.logout', 'Se déconnecter')}
             style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--light)', padding: '5px', borderRadius: '7px', display: 'flex', transition: 'all .12s' }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--errBg)'; (e.currentTarget as HTMLElement).style.color = 'var(--err)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'var(--light)' }}>

@@ -7,7 +7,7 @@
     "tasks": "Imirimo", "finance": "Amafaranga", "alerts": "Ibitangazo",
     "reports": "Raporo", "settings": "Amategeko", "audit": "Genzura",
     "hr": "Ababenzi", "territory": "Inyabutaka", "resources": "Ibikoresho",
-    "animals": "Inyamá"
+    "animals": "Inyamá", "homepage": "Paji Ry'Inzu", "home": "Inzu"
   },
   "auth": {
     "login": "Injira", "logout": "Funga", "register": "Andikisha",
@@ -25,9 +25,83 @@
     "activeToday": "bakora uyu munsi", "animals": "Inyamá", "healthy": "barakira",
     "crops": "Indimwa", "active": "zirakora", "revenue": "Inyungu",
     "expenses": "Ibisoreshwa", "profit": "Inyungu nziza", "area": "Ubutaka",
-    "recentAlerts": "Ibitangazo bishya", "quickActions": "Ibikorwa byihuse",
-    "addAnimal": "Ongereza inyamá", "addCrop": "Ongereza indimwa",
-    "addTask": "Hanga imirimo", "viewReports": "Reba raporo"
+    "score": "Amanota y'ikirima", "recentAlerts": "Ibitangazo bishya",
+    "productionChart": "Ibikorwa bya buri kwezi", "stockStatus": "Uko ndora iri",
+    "quickActions": "Ibikorwa byihuse", "addAnimal": "Ongereza inyamá",
+    "addCrop": "Ongereza indimwa", "addTask": "Hanga imirimo",
+    "viewReports": "Reba raporo"
+  },
+  "livestock": {
+    "title": "Amasho", "animals": "Inyamá", "addAnimal": "Ongereza inyamá",
+    "species": "Ubwoko", "breed": "Inkomoko", "age": "Imyaka", "weight": "Uburemere (kg)",
+    "status": "Uko biri", "zone": "Indangaguriro", "health": "Ubuzima",
+    "reproduction": "Kwibuka", "production": "Ibikorwa", "feeding": "Kurya",
+    "localName": "Izina ry'ahantu", "tagNumber": "Nomero y'impeta",
+    "birthDate": "Italiki yo kuvuka", "sex": "Igitsina", "male": "Igabo", "female": "Igore",
+    "origin": "Inkomoko", "bornOnFarm": "Avukiye mu kirima",
+    "purchased": "Acuriwe", "donated": "Ahawe", "purchasePrice": "Ikiguzi",
+    "supplier": "Umuguzi", "healthy": "Mwiza", "sick": "Arwaye",
+    "quarantine": "Gatorerwa", "deceased": "Yapfuye", "treatment": "Kuvurwa",
+    "bovine": "Inka", "goat": "Impene", "sheep": "Intama", "pig": "Ingurube",
+    "poultry": "Inkoko", "other": "Ibindi", "vaccination": "Gutangira urukingo",
+    "vet": "Muganga w'inyamá", "total": "Ingano y'inyamá", "responsible": "Ushinzwe"
+  },
+  "employees": {
+    "title": "Ababenzi", "addEmployee": "Ongereza umubenzi",
+    "firstName": "Izina rya mbere", "lastName": "Izina ry'umuryango",
+    "phone": "Telefono", "email": "Imeyili", "role": "Akazi",
+    "salary": "Umushahara", "hireDate": "Italiki yo kwinjira", "status": "Uko biri",
+    "active": "Akora", "onLeave": "Mu kiruhuko", "suspended": "Ahagaritswe",
+    "zone": "Indangaguriro y'akazi", "totalEmployees": "Ingano y'ababenzi"
+  },
+  "crops": {
+    "title": "Indimwa", "addCrop": "Ongereza indimwa", "cropType": "Ubwoko bw'indimwa",
+    "variety": "Inkomoko", "zone": "Indangaguriro", "area": "Ubugari (ha)",
+    "plantingDate": "Italiki yo gutera", "harvestDate": "Italiki yo gusarura",
+    "status": "Uko biri", "planned": "Gutegurwa", "growing": "Ikura",
+    "ready": "Iri ngombwa", "harvested": "Yasaruwe", "lost": "Yabuze"
+  },
+  "stock": {
+    "title": "Ndora", "inventory": "Urutonde", "addItem": "Ongereza ikintu",
+    "item": "Ikintu", "category": "Ubwoko", "quantity": "Ingano",
+    "unit": "Igipimo", "unitPrice": "Ikiguzi", "supplier": "Umuguzi",
+    "entry": "Kwinjiza", "exit": "Gusohora", "lowStock": "Ndora nke", "critical": "Ndora y'ingirakamaro"
+  },
+  "finance": {
+    "title": "Amafaranga", "revenue": "Inyungu", "expenses": "Ibisoreshwa",
+    "profit": "Inyungu nziza", "addTransaction": "Ongereza amafaranga",
+    "income": "Inyungu", "expense": "Ibisoreshwa", "amount": "Ingano",
+    "date": "Italiki", "description": "Ibisobanuro", "status": "Uko biri",
+    "paid": "Byishyuwe", "pending": "Biritegereza", "salaries": "Imishahara"
+  },
+  "tasks": {
+    "title": "Imirimo", "addTask": "Imirimo mishya", "backlog": "Urutonde",
+    "todo": "Gukora", "inProgress": "Birakozwe", "done": "Byarangiye",
+    "priority": "Ingirakamaro", "urgent": "Byihutirwa", "high": "Hejuru", "normal": "Bisanzwe",
+    "assignedTo": "Byahawe", "dueDate": "Italiki y'iherezo"
+  },
+  "alerts": {
+    "title": "Ibitangazo", "critical": "By'ingirakamaro cyane", "high": "Hejuru",
+    "normal": "Bisanzwe", "info": "Amakuru", "new": "Bishya",
+    "resolved": "Byakemutse", "resolve": "Kemmura",
+    "markAllRead": "Shyira byose nk'abisomye", "noAlerts": "Nta bitangazo"
+  },
+  "reports": {
+    "title": "Raporo", "generate": "Kora raporo", "export": "Sohereza",
+    "pdf": "PDF", "period": "Igihe", "from": "Kuva", "to": "Kugeza",
+    "language": "Ururimi rwa raporo"
+  },
+  "settings": {
+    "title": "Amategeko", "profile": "Umwirondoro wanjye", "farm": "Amategeko y'ikirima",
+    "users": "Abakoresha n'Imirimo", "languages": "Indimi",
+    "security": "Umutekano", "notifications": "Amakuru",
+    "homepage": "Paji Ry'Inzu"
+  },
+  "audit": {
+    "title": "Genzura", "action": "Igikorwa", "user": "Umukoresha",
+    "module": "Igice", "timestamp": "Igihe", "ip": "Aderesi ya IP",
+    "create": "Kora", "update": "Hindura", "delete": "Siba",
+    "login": "Injira", "logout": "Funga"
   },
   "common": {
     "save": "Bika", "cancel": "Hagarika", "delete": "Siba", "edit": "Hindura",
@@ -38,8 +112,15 @@
     "close": "Funga", "yes": "Yego", "no": "Oya", "actions": "Ibikorwa",
     "required": "Iki gice gisabwa", "error": "Habaye ikibazo",
     "success": "Byagenze neza", "step": "Intambwe", "all": "Byose",
-    "new": "Gishya", "active": "Birakora", "days": "iminsi", "months": "amezi",
-    "years": "imyaka"
+    "new": "Gishya", "active": "Birakora", "inactive": "Bitirakora",
+    "male": "Igabo", "female": "Igore", "unknown": "Ntizwi",
+    "optional": "si ngombwa", "days": "iminsi", "months": "amezi",
+    "years": "imyaka", "ha": "ha", "kg": "kg", "usd": "USD", "cdf": "CDF",
+    "total": "Ingano", "of": "muri", "page": "Urupapuro", "rows": "imirongo",
+    "perPage": "ku rupapuro", "showing": "Werekana", "results": "ibisubizo",
+    "percent": "%", "deleteConfirm": "Urashaka gukosha koko?",
+    "uploadPhoto": "Shyira ifoto", "chooseFile": "Hitamo dosiye",
+    "dragDrop": "Kururura cyangwa gufunga"
   },
   "roles": {
     "super_admin": "Umuyobozi Mukuru", "director": "Umuyobozi",
@@ -47,5 +128,27 @@
     "hr_manager": "Umuyobozi wa Ababenzi", "accountant": "Umuturanyi",
     "vet": "Muganga w'Inyamá", "shepherd": "Umwise",
     "farmer": "Umukulima", "visitor": "Mugenzi"
+  },
+  "zones": {
+    "title": "Indangaguriro", "addZone": "Ongereza indangaguriro", "name": "Izina",
+    "type": "Ubwoko", "area": "Ubugari", "status": "Uko biri", "responsible": "Ushinzwe",
+    "pasture": "Urwuri", "cropland": "Ubutaka bw'indimwa", "active": "Birakora"
+  },
+  "concessions": {
+    "title": "Ibirima", "addConcession": "Ongereza ikirima", "name": "Izina ry'ikirima",
+    "location": "Ahantu", "area": "Ubugari", "owner": "Nyir'ikirima", "status": "Uko biri",
+    "active": "Birakora"
+  },
+  "machines": {
+    "title": "Imashini", "addMachine": "Ongereza imashini", "type": "Ubwoko",
+    "brand": "Urutare", "model": "Akarorero", "status": "Uko biri",
+    "available": "Iraboneka", "inUse": "Ikoreshwa", "maintenance": "Gusana"
+  },
+  "homepage": {
+    "manage": "Simamia Paji Ry'Inzu", "hero": "Igice cya Mbere",
+    "about": "Aho tutuye", "stats": "Imibare", "features": "Ibintu bihariye",
+    "testimonials": "Ivyabwirizi", "contact": "Kuvugana",
+    "preview": "Reba mbere", "save": "Bika Impinduka",
+    "visibility": "Kugaragara", "show": "Erekana", "hide": "Hisha"
   }
 }
