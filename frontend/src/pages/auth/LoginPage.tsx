@@ -3,10 +3,23 @@ import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, Lock, Mail, ArrowLeft, AlertCircle, Loader2, Shield } from 'lucide-react'
 import { useAuthStore } from '@/context/authStore'
 import { useExtraStore } from '@/store/extraStore'
-import i18n from '@/i18n'
+import { useTranslation } from 'react-i18next'
+import { changeLanguage } from '@/i18n'
+
+// Hardcoded admin — always works regardless of localStorage
+const ADMIN = {
+  id: 'admin-1',
+  email: 'richardbunani2013@gmail.com',
+  password: 'Mugogo@2025!',
+  fullName: 'Richard Bunani',
+  role: 'super_admin' as const,
+  language: 'fr' as const,
+  phone: '+243 976960983',
+}
 
 const LANGS = [
   { code: 'fr',    label: 'Français'  },
+  { code: 'en',    label: 'English'   },
   { code: 'sw',    label: 'Kiswahili' },
   { code: 'mashi', label: 'Mashi'     },
 ]
@@ -15,6 +28,7 @@ export default function LoginPage() {
   const navigate = useNavigate()
   const { login, isAuthenticated } = useAuthStore()
   const { managedUsers } = useExtraStore()
+  const { t, i18n } = useTranslation()
 
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
@@ -38,22 +52,20 @@ export default function LoginPage() {
   }, [])
   useEffect(() => {
     if (!locked || lockSec <= 0) return
-    const t = setInterval(() => setLockSec(s => {
-      if (s <= 1) { setLocked(false); return 0 }
-      return s - 1
-    }), 1000)
+    const t = setInterval(() => setLockSec(s => { if (s <= 1) { setLocked(false); return 0 } return s - 1 }), 1000)
     return () => clearInterval(t)
   }, [locked, lockSec])
 
   const handleLang = (code: string) => {
-    setLang(code); i18n.changeLanguage(code); localStorage.setItem('mugogo_lang', code)
+    setLang(code)
+    changeLanguage(code)
   }
 
   const validate = () => {
     const e: typeof fieldErr = {}
-    if (!email.trim()) e.email = 'Email requis'
-    else if (!/\S+@\S+\.\S+/.test(email)) e.email = 'Adresse email invalide'
-    if (!password) e.password = 'Mot de passe requis'
+    if (!email.trim()) e.email = t('common.required', 'Email requis')
+    else if (!/\S+@\S+\.\S+/.test(email)) e.email = 'Email invalide'
+    if (!password) e.password = t('common.required', 'Mot de passe requis')
     else if (password.length < 6) e.password = 'Minimum 6 caractères'
     setFieldErr(e)
     return Object.keys(e).length === 0
@@ -66,31 +78,32 @@ export default function LoginPage() {
     if (locked) return
     if (!validate()) { doShake(); return }
     setLoading(true); setError('')
-    await new Promise(r => setTimeout(r, 750))
+    await new Promise(r => setTimeout(r, 700))
 
-    // Check against managed users (created by admin) + hardcoded admin
-    const allUsers = [
-      { email: 'richardbunani2013@gmail.com', password: 'Mugogo@2025!', fullName: 'Richard Bunani', role: 'super_admin' as const, language: 'fr' as const, id: 'admin-1', phone: '+243 976960983' },
-      ...managedUsers.filter(u => u.id !== 'admin-1').map(u => ({
-        email: u.email, password: u.password,
-        fullName: u.fullName, role: u.role as any,
-        language: u.language, id: u.id, phone: u.phone
-      }))
-    ]
+    const emailLower = email.trim().toLowerCase()
 
-    const found = allUsers.find(u =>
-      u.email.toLowerCase() === email.trim().toLowerCase() &&
-      u.password === password
-    )
+    // 1. Always check hardcoded admin first
+    let found: any = null
+    if (emailLower === ADMIN.email.toLowerCase() && password === ADMIN.password) {
+      found = ADMIN
+    }
+
+    // 2. Check other managed users from store
+    if (!found) {
+      const match = managedUsers.find(u =>
+        u.email.toLowerCase() === emailLower && u.password === password && u.status === 'active'
+      )
+      if (match) found = { ...match, role: match.role as any }
+    }
 
     if (found) {
       if (remember) localStorage.setItem('mugogo_remember', email)
       else localStorage.removeItem('mugogo_remember')
       login({
-        id: found.id,
+        id: found.id || found.id,
         fullName: found.fullName,
         email: found.email,
-        phone: found.phone,
+        phone: found.phone || '',
         role: found.role,
         language: found.language || (lang as any),
       }, `token_${found.role}_${Date.now()}`)
@@ -99,9 +112,9 @@ export default function LoginPage() {
       const next = attempts + 1; setAttempts(next)
       if (next >= 5) {
         setLocked(true); setLockSec(30)
-        setError('Compte temporairement bloqué après 5 tentatives. Patientez 30 secondes.')
+        setError('Compte bloqué après 5 tentatives. Attendez 30 secondes.')
       } else {
-        setError(`Identifiants incorrects. ${5 - next} tentative(s) restante(s).`)
+        setError(`${t('auth.loginError', 'Identifiants incorrects')}. ${5 - next} tentative(s) restante(s).`)
       }
       doShake()
     }
@@ -130,8 +143,6 @@ export default function LoginPage() {
       <div style={{ width: '42%', minWidth: '300px', background: 'var(--b800)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '3rem', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '-80px', right: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'var(--b700)', opacity: .5 }}/>
         <div style={{ position: 'absolute', bottom: '-60px', left: '-60px', width: '260px', height: '260px', borderRadius: '50%', background: 'var(--b600)', opacity: .35 }}/>
-        <div style={{ position: 'absolute', top: '30%', left: '12%', width: '90px', height: '90px', borderRadius: '50%', background: 'var(--b500)', opacity: .2, animation: 'breathe 6s ease-in-out infinite' }}/>
-
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '380px', textAlign: 'center' }}>
           <div style={{ width: '72px', height: '72px', borderRadius: '22px', background: 'rgba(255,255,255,.1)', border: '1px solid rgba(255,255,255,.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8">
@@ -142,23 +153,17 @@ export default function LoginPage() {
           <h1 style={{ fontFamily: 'Georgia,serif', fontSize: '1.9rem', fontWeight: 700, color: 'white', marginBottom: '.75rem', lineHeight: 1.2 }}>
             Concession<br/>Mugogo
           </h1>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,.55)', marginBottom: '.375rem' }}>
-            Walungu, Sud-Kivu, RDC
-          </p>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,.55)', marginBottom: '.375rem' }}>
-            +243 976960983
-          </p>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,.55)', marginBottom: '1.5rem' }}>
-            richardbunani2013@gmail.com
-          </p>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,.55)', marginBottom: '.3rem' }}>Walungu, Sud-Kivu, RDC</p>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,.55)', marginBottom: '.3rem' }}>+243 976960983</p>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,.55)', marginBottom: '1.5rem' }}>richardbunani2013@gmail.com</p>
           <div style={{ width: '36px', height: '2px', background: 'var(--b400)', borderRadius: '99px', margin: '0 auto 1.5rem' }}/>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', textAlign: 'left' }}>
             {[
               'Gestion complète du cheptel et élevage',
               'Suivi des cultures, saisons et récoltes',
               'Finance, RH et paiement des salaires',
-              'Alertes automatiques et rapports PDF/Word',
-              'Interface trilingue FR / Kiswahili / Mashi',
+              'Rapports PDF et Word téléchargeables',
+              'Interface 4 langues FR / EN / SW / Mashi',
             ].map((f, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
                 <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(255,255,255,.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -169,7 +174,6 @@ export default function LoginPage() {
             ))}
           </div>
         </div>
-
         <div style={{ position: 'absolute', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,.07)', borderRadius: '99px', padding: '5px 12px', whiteSpace: 'nowrap' }}>
           <Shield size={11} style={{ color: 'rgba(255,255,255,.55)' }}/>
           <span style={{ fontSize: '10.5px', color: 'rgba(255,255,255,.55)' }}>Connexion sécurisée — Session 8h</span>
@@ -182,19 +186,19 @@ export default function LoginPage() {
           <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '.82rem', color: 'var(--muted)', textDecoration: 'none', marginBottom: '2rem' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
             onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted)')}>
-            <ArrowLeft size={13}/> Retour à l'accueil
+            <ArrowLeft size={13}/> {t('nav.home', 'Retour à l\'accueil')}
           </Link>
 
           <div className="au1" style={{ marginBottom: '1.75rem' }}>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: '1.85rem', fontWeight: 700, color: 'var(--text)', marginBottom: '.375rem' }}>Connexion</h2>
-            <p style={{ fontSize: '.88rem', color: 'var(--muted)' }}>Accédez à votre espace de gestion agricole</p>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: '1.85rem', fontWeight: 700, color: 'var(--text)', marginBottom: '.375rem' }}>{t('auth.login', 'Connexion')}</h2>
+            <p style={{ fontSize: '.88rem', color: 'var(--muted)' }}>{t('auth.loginSubtitle', 'Accédez à votre espace de gestion')}</p>
           </div>
 
           {/* Language selector */}
-          <div className="au2" style={{ display: 'flex', gap: '6px', marginBottom: '1.5rem' }}>
+          <div className="au2" style={{ display: 'flex', gap: '5px', marginBottom: '1.5rem' }}>
             {LANGS.map(l => (
               <button key={l.code} onClick={() => handleLang(l.code)}
-                style={{ flex: 1, padding: '7px', borderRadius: '9px', border: `1.5px solid ${lang === l.code ? 'var(--accent)' : 'var(--border)'}`, background: lang === l.code ? 'var(--accentS)' : 'white', color: lang === l.code ? 'var(--accent)' : 'var(--muted)', fontSize: '.8rem', fontWeight: 700, cursor: 'pointer', transition: 'all .12s' }}>
+                style={{ flex: 1, padding: '7px 4px', borderRadius: '9px', border: `1.5px solid ${lang === l.code ? 'var(--accent)' : 'var(--border)'}`, background: lang === l.code ? 'var(--accentS)' : 'white', color: lang === l.code ? 'var(--accent)' : 'var(--muted)', fontSize: '.72rem', fontWeight: 700, cursor: 'pointer', transition: 'all .12s' }}>
                 {l.label}
               </button>
             ))}
@@ -209,9 +213,8 @@ export default function LoginPage() {
           )}
 
           <form onSubmit={handleLogin} className="au3" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {/* Email */}
             <div>
-              <label style={{ display: 'block', fontSize: '.73rem', fontWeight: 700, color: 'var(--muted)', marginBottom: '.3rem', textTransform: 'uppercase', letterSpacing: '.04em' }}>Email</label>
+              <label style={{ display: 'block', fontSize: '.73rem', fontWeight: 700, color: 'var(--muted)', marginBottom: '.3rem', textTransform: 'uppercase', letterSpacing: '.04em' }}>{t('auth.email', 'Email')}</label>
               <div className="inp-wrap">
                 <Mail size={14} className="ico"/>
                 <input ref={emailRef} type="text" value={email} placeholder="richardbunani2013@gmail.com"
@@ -221,9 +224,8 @@ export default function LoginPage() {
               {fieldErr.email && <p style={{ fontSize: '.72rem', color: 'var(--err)', marginTop: '3px' }}>{fieldErr.email}</p>}
             </div>
 
-            {/* Password */}
             <div>
-              <label style={{ display: 'block', fontSize: '.73rem', fontWeight: 700, color: 'var(--muted)', marginBottom: '.3rem', textTransform: 'uppercase', letterSpacing: '.04em' }}>Mot de passe</label>
+              <label style={{ display: 'block', fontSize: '.73rem', fontWeight: 700, color: 'var(--muted)', marginBottom: '.3rem', textTransform: 'uppercase', letterSpacing: '.04em' }}>{t('auth.password', 'Mot de passe')}</label>
               <div className="inp-wrap">
                 <Lock size={14} className="ico"/>
                 <input type={showPass ? 'text' : 'password'} value={password} placeholder="••••••••"
@@ -237,43 +239,39 @@ export default function LoginPage() {
               {fieldErr.password && <p style={{ fontSize: '.72rem', color: 'var(--err)', marginTop: '3px' }}>{fieldErr.password}</p>}
             </div>
 
-            {/* Remember + Forgot */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: '7px', cursor: 'pointer', fontSize: '.84rem', color: 'var(--muted)' }}>
                 <div onClick={() => setRemember(!remember)}
                   style={{ width: '17px', height: '17px', borderRadius: '5px', border: `2px solid ${remember ? 'var(--accent)' : 'var(--border)'}`, background: remember ? 'var(--accent)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all .12s', flexShrink: 0 }}>
                   {remember && <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>}
                 </div>
-                Se souvenir de moi
+                {t('auth.rememberMe', 'Se souvenir de moi')}
               </label>
-              <Link to="/mot-de-passe-oublie"
-                style={{ fontSize: '.84rem', color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}>
-                Mot de passe oublié ?
+              <Link to="/mot-de-passe-oublie" style={{ fontSize: '.84rem', color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}>
+                {t('auth.forgotPassword', 'Mot de passe oublié ?')}
               </Link>
             </div>
 
-            {/* Lock countdown bar */}
             {locked && (
               <div>
                 <div style={{ height: '4px', background: 'var(--b200)', borderRadius: '99px', overflow: 'hidden', marginBottom: '4px' }}>
                   <div style={{ height: '100%', background: 'var(--err)', borderRadius: '99px', width: `${(lockSec / 30) * 100}%`, transition: 'width 1s linear' }}/>
                 </div>
-                <p style={{ fontSize: '.74rem', color: 'var(--muted)', textAlign: 'center' }}>Déverrouillage dans {lockSec}s...</p>
+                <p style={{ fontSize: '.74rem', color: 'var(--muted)', textAlign: 'center' }}>{lockSec}s...</p>
               </div>
             )}
 
-            {/* Submit */}
             <button type="submit" disabled={loading || locked}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '13px', borderRadius: '12px', background: locked ? 'var(--b300)' : 'var(--accent)', color: 'white', border: 'none', fontSize: '.95rem', fontWeight: 700, cursor: locked || loading ? 'not-allowed' : 'pointer', transition: 'all .15s', boxShadow: locked ? 'none' : '0 4px 14px rgba(140,110,63,.28)' }}>
-              {loading ? <><Loader2 size={15} className="spin"/> Vérification...</>
-              : locked  ? `Patientez ${lockSec}s`
-              : 'Se connecter'}
+              {loading ? <><Loader2 size={15} className="spin"/> {t('common.loading', 'Vérification...')}</>
+              : locked  ? `${lockSec}s...`
+              : t('auth.login', 'Se connecter')}
             </button>
 
             <p style={{ textAlign: 'center', fontSize: '.84rem', color: 'var(--muted)' }}>
-              Pas encore de compte ?{' '}
+              {t('auth.noAccount', 'Pas encore de compte ?')}{' '}
               <Link to="/inscription" style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}>
-                Demander un accès
+                {t('auth.register', 'Demander un accès')}
               </Link>
             </p>
           </form>
@@ -281,9 +279,9 @@ export default function LoginPage() {
           {/* Admin quick access */}
           <div className="au4" style={{ marginTop: '1.5rem', padding: '.875rem 1rem', background: 'var(--b100)', borderRadius: '12px', border: '1px solid var(--b200)' }}>
             <p style={{ fontSize: '.72rem', fontWeight: 700, color: 'var(--b600)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.625rem' }}>
-              Accès rapide — Admin
+              Accès rapide
             </p>
-            <button onClick={() => { setEmail('richardbunani2013@gmail.com'); setPassword('Mugogo@2025!'); setError(''); setFieldErr({}) }}
+            <button onClick={() => { setEmail(ADMIN.email); setPassword(ADMIN.password); setError(''); setFieldErr({}) }}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 10px', borderRadius: '9px', border: '1px solid var(--b300)', background: 'white', cursor: 'pointer', transition: 'all .12s', width: '100%', textAlign: 'left' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--accentS)'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'white'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--b300)' }}>

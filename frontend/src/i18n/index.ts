@@ -1,6 +1,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import fr    from './locales/fr.json'
+import en    from './locales/en.json'
 import sw    from './locales/sw.json'
 import mashi from './locales/mashi.json'
 
@@ -11,15 +12,14 @@ i18n
   .init({
     resources: {
       fr:    { translation: fr    },
+      en:    { translation: en    },
       sw:    { translation: sw    },
       mashi: { translation: mashi },
     },
     lng:         savedLang,
     fallbackLng: 'fr',
     interpolation: { escapeValue: false },
-    react: {
-      useSuspense: false,
-    },
+    react: { useSuspense: false },
   })
 
 export const changeLanguage = (lang: string) => {

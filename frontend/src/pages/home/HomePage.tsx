@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { changeLanguage } from '@/i18n'
 import { useAuthStore } from '@/context/authStore'
 import { useExtraStore, useHomeStore } from '@/store/extraStore'
 import {
@@ -456,6 +457,7 @@ export default function HomePage() {
   const [navSolid,  setNavSolid]   = useState(false)
   const [activeTest, setActiveTest] = useState(0)
   const [reportOpen, setReportOpen] = useState(false)
+  const [currentLang, setCurrentLang] = useState(i18n.language || 'fr')
   const [reportType, setReportType] = useState<RType>('text')
   const reportRef = useRef<HTMLDivElement>(null)
 
@@ -601,7 +603,7 @@ export default function HomePage() {
 
           {/* Trust */}
           <div className="hc" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '22px', flexWrap: 'wrap' }}>
-            {['Données hébergées localement', 'FR / Kiswahili / Mashi', 'Export PDF & Word', 'Sessions sécurisées 8h'].map((t, i) => (
+            {['Données hébergées localement', 'FR / EN / SW / Mashi', 'Export PDF & Word', 'Sessions sécurisées 8h'].map((t, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', color: 'var(--muted)' }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                 {t}
@@ -925,6 +927,26 @@ export default function HomePage() {
         </div>
       </section>
 
+
+      {/* ── LANGUAGE SWITCHER BAR ── */}
+      <div style={{ background: 'var(--b900)', padding: '.75rem clamp(1rem,6vw,4rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem' }}>
+        <span style={{ fontSize: '11px', color: 'var(--b500)', letterSpacing: '.06em', textTransform: 'uppercase', fontWeight: 700 }}>
+          {i18n.language === 'fr' ? 'Langue' : i18n.language === 'en' ? 'Language' : i18n.language === 'sw' ? 'Lugha' : 'Ururimi'} :
+        </span>
+        {([
+          { code: 'fr',    label: 'Français',  flag: 'FR' },
+          { code: 'en',    label: 'English',   flag: 'EN' },
+          { code: 'sw',    label: 'Kiswahili', flag: 'SW' },
+          { code: 'mashi', label: 'Mashi',     flag: 'SH' },
+        ]).map(l => (
+          <button key={l.code} onClick={() => { changeLanguage(l.code); setCurrentLang(l.code) }}
+            style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '5px 12px', borderRadius: '99px', border: `1px solid ${currentLang === l.code ? 'var(--b400)' : 'var(--b700)'}`, background: currentLang === l.code ? 'var(--b700)' : 'transparent', cursor: 'pointer', transition: 'all .15s' }}>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: currentLang === l.code ? 'white' : 'var(--b500)' }}>{l.flag}</span>
+            <span style={{ fontSize: '11px', color: currentLang === l.code ? 'var(--b200)' : 'var(--b600)' }}>{l.label}</span>
+          </button>
+        ))}
+      </div>
+
       {/* ── FOOTER ── */}
       <footer style={{ background: 'var(--b900)', padding: '2rem clamp(1rem,6vw,4rem)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', maxWidth: '1200px', margin: '0 auto' }}>
@@ -941,10 +963,9 @@ export default function HomePage() {
           </div>
           <p style={{ fontSize: '11px', color: 'var(--b600)' }}>© 2025 — Propriété de Richard Bunani — Tous droits réservés</p>
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
-            {['FR', 'SW', 'SH'].map(l => (
-              <span key={l} style={{ fontSize: '11px', color: 'var(--b500)', cursor: 'pointer', fontWeight: 700, transition: 'color .12s' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--b300)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--b500)')}>
+            {[{c:'fr',l:'FR'},{c:'en',l:'EN'},{c:'sw',l:'SW'},{c:'mashi',l:'SH'}].map(({c,l}) => (
+              <span key={c} onClick={() => { changeLanguage(c); setCurrentLang(c) }}
+                style={{ fontSize: '11px', color: currentLang===c ? 'var(--b200)' : 'var(--b500)', cursor: 'pointer', fontWeight: 700, transition: 'color .12s', textDecoration: currentLang===c?'underline':'' }}>
                 {l}
               </span>
             ))}

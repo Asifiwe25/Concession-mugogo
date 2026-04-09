@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { clsx } from 'clsx'
@@ -13,6 +13,7 @@ import { changeLanguage } from '@/i18n'
 
 const LANGS = [
   { code: 'fr',    label: 'FR', full: 'Français'  },
+  { code: 'en',    label: 'EN', full: 'English'    },
   { code: 'sw',    label: 'SW', full: 'Kiswahili'  },
   { code: 'mashi', label: 'SH', full: 'Mashi'      },
 ]
@@ -25,19 +26,21 @@ export default function Sidebar() {
   const [lang, setLang] = useState(i18n.language || 'fr')
   const newAlerts = alerts.filter(a => a.status === 'new').length
 
+  // Sync lang state when i18n changes externally
+  useEffect(() => {
+    setLang(i18n.language)
+  }, [i18n.language])
+
   const handleLang = (code: string) => {
     setLang(code)
     changeLanguage(code)
-    if (user) {
-      // Also update user language preference in authStore
-    }
   }
 
   const NAV_GROUPS = [
     {
       section: null,
       items: [
-        { to: '/tableau-de-bord', labelKey: 'nav.dashboard', icon: LayoutDashboard },
+        { to: '/tableau-de-bord', labelKey: 'nav.dashboard',  icon: LayoutDashboard },
       ],
     },
     {
@@ -48,11 +51,11 @@ export default function Sidebar() {
       ],
     },
     {
-      section: t('nav.livestock', 'Élevage') + ' & ' + t('nav.crops', 'Cultures'),
+      section: `${t('nav.livestock', 'Élevage')} & ${t('nav.crops', 'Cultures')}`,
       items: [
-        { to: '/elevage',   labelKey: 'nav.livestock', icon: Beef   },
-        { to: '/cultures',  labelKey: 'nav.crops',     icon: Sprout },
-        { to: '/recoltes',  labelKey: 'nav.harvests',  icon: Wheat  },
+        { to: '/elevage',  labelKey: 'nav.livestock', icon: Beef   },
+        { to: '/cultures', labelKey: 'nav.crops',     icon: Sprout },
+        { to: '/recoltes', labelKey: 'nav.harvests',  icon: Wheat  },
       ],
     },
     {
@@ -64,20 +67,20 @@ export default function Sidebar() {
       ],
     },
     {
-      section: t('settings.title', 'Gestion'),
+      section: 'Gestion',
       items: [
-        { to: '/employes',  labelKey: 'nav.employees', icon: Users       },
-        { to: '/finance',   labelKey: 'nav.finance',   icon: DollarSign  },
-        { to: '/alertes',   labelKey: 'nav.alerts',    icon: Bell, badge: true },
+        { to: '/employes', labelKey: 'nav.employees', icon: Users       },
+        { to: '/finance',  labelKey: 'nav.finance',   icon: DollarSign  },
+        { to: '/alertes',  labelKey: 'nav.alerts',    icon: Bell, badge: true },
       ],
     },
     {
       section: t('audit.title', 'Administration'),
       items: [
-        { to: '/rapports',       labelKey: 'nav.reports',  icon: FileText },
-        { to: '/parametres',     labelKey: 'nav.settings', icon: Settings },
-        { to: '/accueil-admin',  labelKey: 'settings.homepage', icon: Globe },
-        { to: '/audit',          labelKey: 'nav.audit',    icon: Shield   },
+        { to: '/rapports',      labelKey: 'nav.reports',         icon: FileText },
+        { to: '/parametres',    labelKey: 'nav.settings',        icon: Settings },
+        { to: '/accueil-admin', labelKey: 'settings.homepage',   icon: Globe    },
+        { to: '/audit',         labelKey: 'nav.audit',           icon: Shield   },
       ],
     },
   ]
@@ -100,10 +103,8 @@ export default function Sidebar() {
               <polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
           </div>
-          <div>
-            <div style={{ fontFamily: 'Georgia,serif', fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', lineHeight: 1.25 }}>
-              Concession<br/>Mugogo
-            </div>
+          <div style={{ fontFamily: 'Georgia,serif', fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', lineHeight: 1.25 }}>
+            Concession<br/>Mugogo
           </div>
         </div>
         <div style={{ marginTop: '6px', fontSize: '10px', color: 'var(--light)', fontStyle: 'italic', paddingLeft: '46px' }}>
@@ -138,25 +139,26 @@ export default function Sidebar() {
 
       {/* Footer */}
       <div style={{ padding: '10px 12px', borderTop: '1px solid var(--borderS)' }}>
-        {/* Language selector */}
-        <div style={{ display: 'flex', gap: '3px', marginBottom: '10px' }}>
+
+        {/* Language selector — 4 langues */}
+        <div style={{ display: 'flex', gap: '3px', marginBottom: '8px' }}>
           {LANGS.map(l => (
             <button key={l.code} onClick={() => handleLang(l.code)} title={l.full}
-              style={{ flex: 1, padding: '5px 0', borderRadius: '7px', border: '1px solid', fontSize: '10px', fontWeight: 700, cursor: 'pointer', transition: 'all .15s',
-                background:    lang === l.code ? 'var(--accent)' : 'var(--surface2)',
-                color:         lang === l.code ? 'white' : 'var(--muted)',
-                borderColor:   lang === l.code ? 'var(--accent)' : 'var(--border)' }}>
+              style={{ flex: 1, padding: '5px 0', borderRadius: '7px', border: '1px solid', fontSize: '9.5px', fontWeight: 700, cursor: 'pointer', transition: 'all .15s',
+                background:  lang === l.code ? 'var(--accent)' : 'var(--surface2)',
+                color:       lang === l.code ? 'white' : 'var(--muted)',
+                borderColor: lang === l.code ? 'var(--accent)' : 'var(--border)' }}>
               {l.label}
             </button>
           ))}
         </div>
 
-        {/* Home page shortcut */}
+        {/* Home button */}
         <button onClick={() => navigate('/')}
-          style={{ display: 'flex', alignItems: 'center', gap: '7px', width: '100%', padding: '6px 8px', borderRadius: '8px', border: '1px solid var(--borderS)', background: 'var(--surface2)', cursor: 'pointer', marginBottom: '8px', fontSize: '11.5px', color: 'var(--muted)', transition: 'all .13s' }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--accentS)'; (e.currentTarget as HTMLElement).style.color = 'var(--accent)' }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'var(--surface2)'; (e.currentTarget as HTMLElement).style.color = 'var(--muted)' }}>
-          <Home size={13}/>
+          style={{ display: 'flex', alignItems: 'center', gap: '7px', width: '100%', padding: '7px 9px', borderRadius: '9px', border: '1px solid var(--borderS)', background: 'var(--surface2)', cursor: 'pointer', marginBottom: '8px', fontSize: '11.5px', color: 'var(--muted)', transition: 'all .13s' }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--accentS)'; (e.currentTarget as HTMLElement).style.color = 'var(--accent)'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)' }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'var(--surface2)'; (e.currentTarget as HTMLElement).style.color = 'var(--muted)'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--borderS)' }}>
+          <Home size={13} style={{ flexShrink: 0 }}/>
           <span>{t('nav.home', 'Page d\'accueil')}</span>
         </button>
 
