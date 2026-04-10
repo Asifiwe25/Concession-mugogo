@@ -1,3 +1,4 @@
+import { PageReport } from '@/components/ui/PageReport'
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Plus, Download } from 'lucide-react'

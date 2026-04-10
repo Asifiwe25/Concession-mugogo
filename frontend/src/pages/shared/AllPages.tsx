@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Plus, Download, FileText, Wrench, ChevronRight, CheckCircle, Loader2, X, Trash2 } from 'lucide-react'
 import { useExtraStore } from '@/store/extraStore'
 import { useAuthStore } from '@/context/authStore'
+import { useTranslation } from 'react-i18next'
+import { getReportLogoHTML } from '@/components/ui/MugogoLogo'
 import { useStore, Harvest, Machine } from '@/store/useStore'
 import { ConfirmDelete, Modal, StatCard, EmptyState, Pagination, toast } from '@/components/ui/crud'
 import { clsx } from 'clsx'
@@ -312,34 +314,138 @@ function ReportGeneratorModal({ rpt, onClose }: { rpt: typeof REPORT_DEFS[0]; on
     await new Promise(r => setTimeout(r, 1600))
     const now = new Date()
     const periodLabel = { daily:'Journalier', monthly:'Mensuel', annual:'Annuel' }[period]
-    const content = [
-      `CONCESSION MUGOGO — ${rpt.title.toUpperCase()} ${periodLabel.toUpperCase()}`,
-      `Propriétaire : Richard Bunani`,
-      `Walungu, Sud-Kivu, République Démocratique du Congo`,
-      `Contact : +243 976960983 | richardbunani2013@gmail.com`,
-      `Superficie : 9 hectares`,
-      ``,
-      `Période : Du ${dateFrom} au ${dateTo}`,
-      `Généré le : ${now.toLocaleDateString('fr-FR')} à ${now.toLocaleTimeString('fr-FR')}`,
-      `Format : ${format.toUpperCase()} | Langue : ${lang === 'fr' ? 'Français' : lang === 'sw' ? 'Kiswahili' : 'Mashi'}`,
-      ``,
-      `─────────────────────────────────────────────`,
-      `Contenu : ${rpt.desc}`,
-      ``,
-      `Pour toute question, contacter Richard Bunani :`,
-      `Tél/WhatsApp : +243 976960983`,
-      `Email : richardbunani2013@gmail.com`,
-    ].join('\n')
-    const blob = new Blob([content], { type: 'text/plain' })
-    const url  = URL.createObjectURL(blob)
-    const a    = document.createElement('a')
+    const langLabel = { fr:'Français', en:'English', sw:'Kiswahili', mashi:'Mashi' }[lang] || 'Français'
     const fname = `Mugogo_${rpt.id}_${periodLabel}_${dateFrom.replace(/-/g,'')}`
-    a.href = url
-    a.download = `${fname}${FORMATS.find(f=>f.v===format)?.ext||'.txt'}`
-    document.body.appendChild(a); a.click()
-    document.body.removeChild(a); URL.revokeObjectURL(url)
+
+    // Build full HTML report with logo
+    const htmlContent = `<!DOCTYPE html>
+<html lang="${lang}">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>${rpt.title} — Concession Mugogo</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Georgia, serif; font-size: 13px; color: #2e1f10; background: white; padding: 40px; max-width: 800px; margin: 0 auto; }
+  .header { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 3px solid #8c6e3f; display: flex; align-items: center; gap: 16px; }
+  .logo-circle { width: 60px; height: 60px; background: #8c6e3f; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-circle svg { width: 36px; height: 36px; }
+  .org-name { font-size: 22px; font-weight: 700; color: #8c6e3f; line-height: 1.1; }
+  .org-sub { font-size: 11px; color: #666; margin-top: 3px; }
+  .report-title { background: #8c6e3f; color: white; padding: 12px 20px; border-radius: 8px; font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .meta-box { background: #f7f0e4; border: 1px solid #deccb0; border-radius: 8px; padding: 10px 14px; }
+  .meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: #8c6e3f; font-weight: 700; margin-bottom: 3px; }
+  .meta-value { font-size: 13px; font-weight: 600; color: #2e1f10; }
+  .section-title { font-size: 14px; font-weight: 700; color: #8c6e3f; border-bottom: 2px solid #ede0cc; padding-bottom: 6px; margin: 20px 0 12px; }
+  .content-box { background: #fdfaf5; border: 1px solid #ede0cc; border-radius: 8px; padding: 14px; margin-bottom: 16px; font-size: 13px; line-height: 1.7; color: #4a3520; }
+  .data-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+  .data-table th { background: #8c6e3f; color: white; padding: 8px 12px; font-size: 11px; text-align: left; }
+  .data-table td { padding: 7px 12px; font-size: 12px; border-bottom: 1px solid #f0e8dc; }
+  .data-table tr:nth-child(even) td { background: #fdfaf5; }
+  .footer { margin-top: 32px; padding-top: 16px; border-top: 2px solid #ede0cc; display: flex; justify-content: space-between; font-size: 11px; color: #8a7060; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; }
+  .badge-ok { background: #f0f2eb; color: #6b7c4a; }
+  .badge-warn { background: #faf3e0; color: #8a6520; }
+  .badge-err { background: #f9eded; color: #8c3a3a; }
+  @media print { body { padding: 20px; } }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-circle">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 15 L85 40 L85 85 L15 85 L15 40 Z" fill="rgba(255,255,255,0.95)"/>
+        <rect x="38" y="62" width="14" height="23" rx="2" fill="#8c6e3f" opacity="0.9"/>
+        <rect x="18" y="52" width="14" height="12" rx="2" fill="#8c6e3f" opacity="0.7"/>
+        <rect x="68" y="52" width="14" height="12" rx="2" fill="#8c6e3f" opacity="0.7"/>
+        <ellipse cx="66" cy="36" rx="9" ry="5.5" fill="#8c6e3f" opacity="0.8" transform="rotate(-30 66 36)"/>
+        <circle cx="30" cy="26" r="6" fill="rgba(255,220,100,0.95)"/>
+      </svg>
+    </div>
+    <div>
+      <div class="org-name">Concession Mugogo</div>
+      <div class="org-sub">Gestion Agro-pastorale Intégrée — Walungu, Sud-Kivu, RDC</div>
+      <div class="org-sub">Tél/WhatsApp : +243 976960983 | richardbunani2013@gmail.com</div>
+    </div>
+  </div>
+
+  <div class="report-title">${rpt.title} — ${periodLabel}</div>
+
+  <div class="meta-grid">
+    <div class="meta-box">
+      <div class="meta-label">Période</div>
+      <div class="meta-value">Du ${dateFrom} au ${dateTo}</div>
+    </div>
+    <div class="meta-box">
+      <div class="meta-label">Généré le</div>
+      <div class="meta-value">${now.toLocaleDateString('fr-FR')} à ${now.toLocaleTimeString('fr-FR')}</div>
+    </div>
+    <div class="meta-box">
+      <div class="meta-label">Format</div>
+      <div class="meta-value">${format.toUpperCase()}</div>
+    </div>
+    <div class="meta-box">
+      <div class="meta-label">Langue</div>
+      <div class="meta-value">${langLabel}</div>
+    </div>
+  </div>
+
+  <div class="section-title">Description du rapport</div>
+  <div class="content-box">
+    <strong>${rpt.title}</strong> — ${rpt.desc}
+    <br/><br/>
+    Ce rapport couvre la période du <strong>${dateFrom}</strong> au <strong>${dateTo}</strong>.
+    Il a été généré automatiquement par le système ERP de la Concession Mugogo.
+  </div>
+
+  <div class="section-title">Informations de la concession</div>
+  <table class="data-table">
+    <tr><th>Propriété</th><th>Valeur</th></tr>
+    <tr><td>Propriétaire</td><td><strong>Richard Bunani</strong></td></tr>
+    <tr><td>Localisation</td><td>Walungu, Sud-Kivu, République Démocratique du Congo</td></tr>
+    <tr><td>Superficie</td><td>9 hectares</td></tr>
+    <tr><td>Téléphone / WhatsApp</td><td>+243 976960983</td></tr>
+    <tr><td>Email</td><td>richardbunani2013@gmail.com</td></tr>
+    <tr><td>Type de rapport</td><td>${periodLabel}</td></tr>
+  </table>
+
+  <div class="section-title">Données incluses</div>
+  <div class="content-box">
+    Les données de ce rapport couvrent : ${rpt.desc}<br/>
+    Période analysée : ${periodLabel} (${dateFrom} → ${dateTo})<br/>
+    Pour plus de détails, consultez le tableau de bord du système ERP.
+  </div>
+
+  <div class="footer">
+    <span>© 2025 Concession Mugogo — Walungu, Sud-Kivu, RDC</span>
+    <span>Rapport généré le ${now.toLocaleDateString('fr-FR')}</span>
+    <span>Propriétaire : Richard Bunani</span>
+  </div>
+</body>
+</html>`
+
+    if (format === 'pdf') {
+      // Open print dialog for PDF
+      const w = window.open('', '_blank')
+      if (w) {
+        w.document.write(htmlContent)
+        w.document.close()
+        setTimeout(() => { w.print() }, 500)
+      }
+    } else {
+      // Download as HTML file (opens in Word)
+      const blob = new Blob([htmlContent], { type: 'application/vnd.ms-word;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${fname}.doc`
+      document.body.appendChild(a); a.click()
+      document.body.removeChild(a); URL.revokeObjectURL(url)
+    }
+
     setGen(false); setDone(true)
-    toast(`${rpt.title} téléchargé`)
+    toast(`${rpt.title} — ${periodLabel} téléchargé`)
   }
 
   return (

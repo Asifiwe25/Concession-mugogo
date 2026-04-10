@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { changeLanguage } from '@/i18n'
+import { useLang } from '@/context/LanguageContext'
 import { useAuthStore } from '@/context/authStore'
 import { useExtraStore, useHomeStore } from '@/store/extraStore'
 import {
@@ -461,9 +462,10 @@ export default function HomePage() {
   const [reportType, setReportType] = useState<RType>('text')
   const reportRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (isAuthenticated) navigate('/tableau-de-bord', { replace: true })
-  }, [isAuthenticated])
+  // No auto-redirect — authenticated users can visit homepage
+  // useEffect(() => {
+  //   if (isAuthenticated) navigate('/tableau-de-bord', { replace: true })
+  // }, [isAuthenticated])
 
   useEffect(() => {
     const onScroll = () => setNavSolid(window.scrollY > 50)
@@ -929,9 +931,9 @@ export default function HomePage() {
 
 
       {/* ── LANGUAGE SWITCHER BAR ── */}
-      <div style={{ background: 'var(--b900)', padding: '.75rem clamp(1rem,6vw,4rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem' }}>
+      <div style={{ background: 'var(--b900)', padding: '.875rem clamp(1rem,6vw,4rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
         <span style={{ fontSize: '11px', color: 'var(--b500)', letterSpacing: '.06em', textTransform: 'uppercase', fontWeight: 700 }}>
-          {i18n.language === 'fr' ? 'Langue' : i18n.language === 'en' ? 'Language' : i18n.language === 'sw' ? 'Lugha' : 'Ururimi'} :
+          {currentLang === 'fr' ? 'Changer de langue' : currentLang === 'en' ? 'Change language' : currentLang === 'sw' ? 'Badilisha lugha' : 'Hindura ururimi'} :
         </span>
         {([
           { code: 'fr',    label: 'Français',  flag: 'FR' },
@@ -940,9 +942,9 @@ export default function HomePage() {
           { code: 'mashi', label: 'Mashi',     flag: 'SH' },
         ]).map(l => (
           <button key={l.code} onClick={() => { changeLanguage(l.code); setCurrentLang(l.code) }}
-            style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '5px 12px', borderRadius: '99px', border: `1px solid ${currentLang === l.code ? 'var(--b400)' : 'var(--b700)'}`, background: currentLang === l.code ? 'var(--b700)' : 'transparent', cursor: 'pointer', transition: 'all .15s' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 14px', borderRadius: '99px', border: `1.5px solid ${currentLang === l.code ? 'var(--b400)' : 'var(--b700)'}`, background: currentLang === l.code ? 'var(--b600)' : 'transparent', cursor: 'pointer', transition: 'all .2s' }}>
             <span style={{ fontSize: '11px', fontWeight: 700, color: currentLang === l.code ? 'white' : 'var(--b500)' }}>{l.flag}</span>
-            <span style={{ fontSize: '11px', color: currentLang === l.code ? 'var(--b200)' : 'var(--b600)' }}>{l.label}</span>
+            <span style={{ fontSize: '11px', color: currentLang === l.code ? 'white' : 'var(--b600)', fontWeight: currentLang === l.code ? 700 : 400 }}>{l.label}</span>
           </button>
         ))}
       </div>

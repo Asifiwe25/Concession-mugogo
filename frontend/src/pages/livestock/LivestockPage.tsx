@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react'
+import { PageReport } from '@/components/ui/PageReport'
 import { useTranslation } from 'react-i18next'
 import { Plus, Download, Search, X, Eye, Edit, Trash2, Activity, Syringe, Scale, Calendar } from 'lucide-react'
 import { useStore, Animal } from '@/store/useStore'

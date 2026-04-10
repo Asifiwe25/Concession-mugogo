@@ -6,6 +6,7 @@ import { useExtraStore } from '@/store/extraStore'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ArrowRight, Plus, Home, Bell, CheckCircle, X, User } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { PageReport } from '@/components/ui/PageReport'
 import { toast } from '@/components/ui/crud'
 import { clsx } from 'clsx'
 
@@ -64,6 +65,26 @@ export default function DashboardPage() {
           <button className="btn-secondary btn-sm" onClick={()=>navigate('/')}>
             <Home size={13}/> Page d'accueil
           </button>
+          <PageReport
+            title="Rapport Dashboard"
+            description="Résumé global de la Concession Mugogo — animaux, cultures, finances, alertes et stock."
+            pageId="dashboard"
+            data={[
+              { label: 'Animaux total', valeur: animals.length },
+              { label: 'Employés actifs', valeur: activeEmp },
+              { label: 'Revenus', valeur: `$${Math.round(rev)}` },
+              { label: 'Dépenses', valeur: `$${Math.round(exp)}` },
+              { label: 'Bénéfice net', valeur: `$${Math.round(profit)}` },
+              { label: 'Alertes nouvelles', valeur: newAlerts },
+              { label: 'Cultures prêtes', valeur: readyCrops },
+              { label: 'Animaux malades', valeur: sickAnimals },
+              { label: 'Stock critique', valeur: critStock },
+            ]}
+            columns={[
+              { key: 'label', label: 'Indicateur' },
+              { key: 'valeur', label: 'Valeur' },
+            ]}
+          />
           <button className="btn-secondary btn-sm" onClick={()=>navigate('/taches')}>
             Voir tâches
           </button>

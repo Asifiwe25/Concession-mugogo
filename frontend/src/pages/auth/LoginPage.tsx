@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, Lock, Mail, ArrowLeft, AlertCircle, Loader2, Shield } from 'lucide-react'
+import { MugogoLogo } from '@/components/ui/MugogoLogo'
 import { useAuthStore } from '@/context/authStore'
 import { useExtraStore } from '@/store/extraStore'
 import { useTranslation } from 'react-i18next'
@@ -144,11 +145,8 @@ export default function LoginPage() {
         <div style={{ position: 'absolute', top: '-80px', right: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'var(--b700)', opacity: .5 }}/>
         <div style={{ position: 'absolute', bottom: '-60px', left: '-60px', width: '260px', height: '260px', borderRadius: '50%', background: 'var(--b600)', opacity: .35 }}/>
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '380px', textAlign: 'center' }}>
-          <div style={{ width: '72px', height: '72px', borderRadius: '22px', background: 'rgba(255,255,255,.1)', border: '1px solid rgba(255,255,255,.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+            <MugogoLogo size={72} color="rgba(255,255,255,0.9)"/>
           </div>
           <h1 style={{ fontFamily: 'Georgia,serif', fontSize: '1.9rem', fontWeight: 700, color: 'white', marginBottom: '.75rem', lineHeight: 1.2 }}>
             Concession<br/>Mugogo
