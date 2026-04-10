@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState, useMemo } from 'react'
 import { Plus, Layers } from 'lucide-react'
 import { useStore, Zone } from '@/store/useStore'
@@ -57,7 +58,7 @@ function ZoneForm({initial,onSave,onCancel}:{initial:FD;onSave:(d:FD)=>void;onCa
       </div>
       <div><label className="label">Notes</label><textarea className="input" rows={2} placeholder="Caractéristiques du sol, accès eau..." value={form.notes} onChange={e=>set('notes',e.target.value)}/></div>
       <div style={{display:'flex',gap:'0.75rem',justifyContent:'flex-end',paddingTop:'1rem',borderTop:'1px solid var(--borderS)'}}>
-        <button className="btn-secondary" onClick={onCancel}>Annuler</button>
+        <button className="btn-secondary" onClick={onCancel}>{'Annuler'}</button>
         <button className="btn-primary" onClick={()=>{if(form.name&&form.code)onSave(form);else toast('Nom et code requis','error')}}>✓ Enregistrer</button>
       </div>
     </div>
@@ -65,6 +66,7 @@ function ZoneForm({initial,onSave,onCancel}:{initial:FD;onSave:(d:FD)=>void;onCa
 }
 
 export default function ZonesPage() {
+  const { t } = useTranslation()
   const {zones,addZone,updateZone,deleteZone}=useStore()
   const [showAdd,setShowAdd]=useState(false)
   const [editZone,setEditZone]=useState<Zone|null>(null)

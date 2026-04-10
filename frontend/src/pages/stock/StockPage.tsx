@@ -52,7 +52,7 @@ function StockForm({initial,onSave,onCancel}:{initial:FD;onSave:(d:FD)=>void;onC
         <div><label className="label">Emplacement</label><select className="input" value={form.location} onChange={e=>set('location',e.target.value)}><option value="">...</option>{['Entrepôt principal','Armoire vétérinaire','Réfrigérateur','Hangar agricole','Réservoir carburant'].map(l=><option key={l} value={l}>{l}</option>)}</select></div>
       </div>
       <div style={{display:'flex',gap:'0.75rem',justifyContent:'flex-end',paddingTop:'1rem',borderTop:'1px solid var(--borderS)'}}>
-        <button className="btn-secondary" onClick={onCancel}>Annuler</button>
+        <button className="btn-secondary" onClick={onCancel}>{'Annuler'}</button>
         <button className="btn-primary" onClick={()=>{if(validate())onSave(form);else toast('Champs obligatoires manquants','error')}}>✓ Enregistrer</button>
       </div>
     </div>
@@ -97,7 +97,7 @@ function MovementModal({item,open,onClose}:{item:StockItem|null;open:boolean;onC
           </div>
         </div>
         <div className="modal-footer">
-          <button className="btn-secondary" onClick={onClose}>Annuler</button>
+          <button className="btn-secondary" onClick={onClose}>{'Annuler'}</button>
           <button className="btn-primary" onClick={handleSave}>✓ Enregistrer</button>
         </div>
       </div>

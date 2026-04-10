@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState } from 'react'
 import { Plus, MapPin, Edit } from 'lucide-react'
 import { Modal, toast } from '@/components/ui/crud'
@@ -12,6 +13,7 @@ const CONCESSION = {
 }
 
 export default function ConcessionsPage() {
+  const { t } = useTranslation()
   const {zones,animals,crops,employees,transactions}=useStore()
   const [tab,setTab]=useState('general')
   const [showAdd,setShowAdd]=useState(false)
@@ -110,7 +112,7 @@ export default function ConcessionsPage() {
               <input className="input" placeholder="Nom du propriétaire / responsable"/>
               <textarea className="input" rows={2} placeholder="Description, notes..."/>
             </div>
-            <div className="modal-footer"><button className="btn-secondary" onClick={()=>setShowAdd(false)}>Annuler</button><button className="btn-primary" onClick={()=>{setShowAdd(false);toast('✅ Concession créée')}}>Créer</button></div>
+            <div className="modal-footer"><button className="btn-secondary" onClick={()=>setShowAdd(false)}>{t('common.cancel','Annuler')}</button><button className="btn-primary" onClick={()=>{setShowAdd(false);toast('✅ Concession créée')}}>Créer</button></div>
           </div>
         </div>
       )}

@@ -189,7 +189,7 @@ function EmpForm({ initial, onSave, onCancel, editMode=false }: { initial:FormDa
         <span className="text-xs" style={{color:'var(--text-light)'}}>Étape {step+1}/{STEPS.length}</span>
         <div style={{display:'flex',gap:'0.75rem'}}>
           {step>0 ? <button className="btn-secondary" onClick={()=>setStep(s=>s-1)}>← Précédent</button>
-                  : <button className="btn-secondary" onClick={onCancel}>Annuler</button>}
+                  : <button className="btn-secondary" onClick={onCancel}>{'Annuler'}</button>}
           {step<maxStep
             ? <button className="btn-primary" onClick={()=>setStep(s=>s+1)} disabled={step===0&&(!form.firstName||!form.lastName)}>Suivant →</button>
             : <button className="btn-primary" onClick={()=>{ if(validate()) onSave(form); else toast('Champs obligatoires manquants','error')}}>✓ {editMode?'Modifier':'Créer'}</button>

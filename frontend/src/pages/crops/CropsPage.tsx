@@ -755,7 +755,7 @@ function CropForm({ initial, onSave, onCancel, editMode=false }: {
         <div style={{display:'flex',gap:'0.625rem'}}>
           {step>0
             ? <button onClick={()=>setStep(s=>s-1)} style={{padding:'8px 16px',borderRadius:'10px',border:'1px solid var(--border)',background:'var(--surface2)',color:'var(--text)',fontSize:'0.82rem',fontWeight:600,cursor:'pointer'}}>← Précédent</button>
-            : <button onClick={onCancel} style={{padding:'8px 16px',borderRadius:'10px',border:'1px solid var(--border)',background:'var(--surface2)',color:'var(--text)',fontSize:'0.82rem',fontWeight:600,cursor:'pointer'}}>Annuler</button>
+            : <button onClick={onCancel} style={{padding:'8px 16px',borderRadius:'10px',border:'1px solid var(--border)',background:'var(--surface2)',color:'var(--text)',fontSize:'0.82rem',fontWeight:600,cursor:'pointer'}}>{'Annuler'}</button>
           }
           {step<4
             ? <button onClick={()=>{if(validate())setStep(s=>s+1)}} disabled={step===0&&!form.type} style={{padding:'8px 16px',borderRadius:'10px',background:'var(--accent)',color:'white',border:'none',fontSize:'0.82rem',fontWeight:600,cursor:'pointer',opacity:step===0&&!form.type?.5:1}}>Suivant →</button>
@@ -872,6 +872,7 @@ function CropCard({ crop, onView, onEdit, onDelete, index }: {
 
 // ── Main Page ─────────────────────────────────────────────────
 export default function CropsPage() {
+  const { t } = useTranslation()
   const { crops, addCrop, updateCrop, deleteCrop } = useStore()
   const [search,setSearch] = useState('')
   const [statusF,setStatusF] = useState('')

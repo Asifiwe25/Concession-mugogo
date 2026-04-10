@@ -74,7 +74,7 @@ function TaskForm({initial,onSave,onCancel}:{initial:FD;onSave:(d:FD)=>void;onCa
       </div>
       <div><label className="label">Heures estimées</label><input className="input" type="number" placeholder="0" value={form.estimatedHours||''} onChange={e=>set('estimatedHours',parseFloat(e.target.value)||0)}/></div>
       <div style={{display:'flex',gap:'0.75rem',justifyContent:'flex-end',paddingTop:'1rem',borderTop:'1px solid var(--borderS)'}}>
-        <button className="btn-secondary" onClick={onCancel}>Annuler</button>
+        <button className="btn-secondary" onClick={onCancel}>{'Annuler'}</button>
         <button className="btn-primary" onClick={()=>{if(form.title.trim())onSave(form);else toast('Le titre est obligatoire','error')}}>✓ Enregistrer</button>
       </div>
     </div>

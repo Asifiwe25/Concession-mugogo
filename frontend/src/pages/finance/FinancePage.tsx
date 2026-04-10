@@ -80,7 +80,7 @@ function TransactionForm({initial,onSave,onCancel}:{initial:FD;onSave:(d:FD)=>vo
       </div>
       <div><label className="label">Notes</label><textarea className="input" rows={2} placeholder="Notes complémentaires..." value={form.notes} onChange={e=>set('notes',e.target.value)}/></div>
       <div style={{display:'flex',gap:'0.75rem',justifyContent:'flex-end',paddingTop:'1rem',borderTop:'1px solid var(--borderS)'}}>
-        <button className="btn-secondary" onClick={onCancel}>Annuler</button>
+        <button className="btn-secondary" onClick={onCancel}>{'Annuler'}</button>
         <button className="btn-primary" onClick={()=>{if(form.description&&form.amount>0)onSave(form);else toast('Description et montant requis','error')}}>✓ Enregistrer</button>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { changeLanguage } from '@/i18n'
-import { useLang } from '@/context/LanguageContext'
+import { LangSwitcher, useLang } from '@/context/LanguageContext'
 import { useAuthStore } from '@/context/authStore'
 import { useExtraStore, useHomeStore } from '@/store/extraStore'
 import {
@@ -458,7 +458,7 @@ export default function HomePage() {
   const [navSolid,  setNavSolid]   = useState(false)
   const [activeTest, setActiveTest] = useState(0)
   const [reportOpen, setReportOpen] = useState(false)
-  const [currentLang, setCurrentLang] = useState(i18n.language || 'fr')
+  const { lang: currentLang, setLang } = useLang()
   const [reportType, setReportType] = useState<RType>('text')
   const reportRef = useRef<HTMLDivElement>(null)
 
@@ -933,20 +933,9 @@ export default function HomePage() {
       {/* ── LANGUAGE SWITCHER BAR ── */}
       <div style={{ background: 'var(--b900)', padding: '.875rem clamp(1rem,6vw,4rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
         <span style={{ fontSize: '11px', color: 'var(--b500)', letterSpacing: '.06em', textTransform: 'uppercase', fontWeight: 700 }}>
-          {currentLang === 'fr' ? 'Changer de langue' : currentLang === 'en' ? 'Change language' : currentLang === 'sw' ? 'Badilisha lugha' : 'Hindura ururimi'} :
+          {currentLang==='fr'?'Changer de langue':currentLang==='en'?'Change language':currentLang==='sw'?'Badilisha lugha':'Hindura ururimi'} :
         </span>
-        {([
-          { code: 'fr',    label: 'Français',  flag: 'FR' },
-          { code: 'en',    label: 'English',   flag: 'EN' },
-          { code: 'sw',    label: 'Kiswahili', flag: 'SW' },
-          { code: 'mashi', label: 'Mashi',     flag: 'SH' },
-        ]).map(l => (
-          <button key={l.code} onClick={() => { changeLanguage(l.code); setCurrentLang(l.code) }}
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 14px', borderRadius: '99px', border: `1.5px solid ${currentLang === l.code ? 'var(--b400)' : 'var(--b700)'}`, background: currentLang === l.code ? 'var(--b600)' : 'transparent', cursor: 'pointer', transition: 'all .2s' }}>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: currentLang === l.code ? 'white' : 'var(--b500)' }}>{l.flag}</span>
-            <span style={{ fontSize: '11px', color: currentLang === l.code ? 'white' : 'var(--b600)', fontWeight: currentLang === l.code ? 700 : 400 }}>{l.label}</span>
-          </button>
-        ))}
+        <LangSwitcher variant="full" />
       </div>
 
       {/* ── FOOTER ── */}
@@ -966,7 +955,7 @@ export default function HomePage() {
           <p style={{ fontSize: '11px', color: 'var(--b600)' }}>© 2025 — Propriété de Richard Bunani — Tous droits réservés</p>
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
             {[{c:'fr',l:'FR'},{c:'en',l:'EN'},{c:'sw',l:'SW'},{c:'mashi',l:'SH'}].map(({c,l}) => (
-              <span key={c} onClick={() => { changeLanguage(c); setCurrentLang(c) }}
+              <span key={c} onClick={() => { setLang(c) }}
                 style={{ fontSize: '11px', color: currentLang===c ? 'var(--b200)' : 'var(--b500)', cursor: 'pointer', fontWeight: 700, transition: 'color .12s', textDecoration: currentLang===c?'underline':'' }}>
                 {l}
               </span>

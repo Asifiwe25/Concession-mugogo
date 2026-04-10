@@ -10,34 +10,22 @@ export interface User {
   email: string
   phone?: string
   role: Role
-  language: 'fr' | 'sw' | 'mashi'
+  language: 'fr' | 'en' | 'sw' | 'mashi'
   avatar?: string
   concessionId?: string
   lastLogin?: string
   sessionExpiry?: number
 }
 
-// Session duration: 8 hours
 const SESSION_DURATION = 8 * 60 * 60 * 1000
 
-function isSessionValid(): boolean {
-  try {
-    const expiry = localStorage.getItem('mugogo_session_expiry')
-    if (!expiry) return false
-    const token = localStorage.getItem('mugogo_token')
-    if (!token) return false
-    return Date.now() < parseInt(expiry)
-  } catch { return false }
-}
-
+// Simple session check - no expiry on Vercel to avoid issues
 function getStoredUser(): User | null {
   try {
-    if (!isSessionValid()) {
-      clearSession()
-      return null
-    }
     const stored = localStorage.getItem('mugogo_user')
-    return stored ? JSON.parse(stored) : null
+    const token  = localStorage.getItem('mugogo_token')
+    if (!stored || !token) return null
+    return JSON.parse(stored) as User
   } catch { return null }
 }
 
@@ -54,21 +42,18 @@ interface AuthState {
   login: (user: User, token: string) => void
   logout: () => void
   updateUser: (updates: Partial<User>) => void
-  checkSession: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: getStoredUser(),
-  token: isSessionValid() ? localStorage.getItem('mugogo_token') : null,
-  isAuthenticated: isSessionValid() && !!localStorage.getItem('mugogo_token'),
+  user:            getStoredUser(),
+  token:           localStorage.getItem('mugogo_token'),
+  isAuthenticated: !!localStorage.getItem('mugogo_token') && !!localStorage.getItem('mugogo_user'),
 
   login: (user, token) => {
-    const expiry = Date.now() + SESSION_DURATION
     localStorage.setItem('mugogo_token', token)
     localStorage.setItem('mugogo_user', JSON.stringify({ ...user, lastLogin: new Date().toISOString() }))
-    localStorage.setItem('mugogo_session_expiry', String(expiry))
     localStorage.setItem('mugogo_lang', user.language || 'fr')
-    set({ user: { ...user, lastLogin: new Date().toISOString(), sessionExpiry: expiry }, token, isAuthenticated: true })
+    set({ user: { ...user, lastLogin: new Date().toISOString() }, token, isAuthenticated: true })
   },
 
   logout: () => {
@@ -82,18 +67,4 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (updated) localStorage.setItem('mugogo_user', JSON.stringify(updated))
       return { user: updated }
     }),
-
-  checkSession: () => {
-    if (!isSessionValid()) {
-      clearSession()
-      set({ user: null, token: null, isAuthenticated: false })
-    }
-  },
 }))
-
-// Auto-check session every 5 minutes
-if (typeof window !== 'undefined') {
-  setInterval(() => {
-    useAuthStore.getState().checkSession()
-  }, 5 * 60 * 1000)
-}
