@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "Concession Mugogo",
-    "tagline": "Gestion Agricole Intégrée"
+    "tagline": "Gestion Agricole Intégrée",
+    "subtitle": "Walungu, Sud-Kivu, RDC"
   },
   "nav": {
     "dashboard": "Tableau de bord",
@@ -524,7 +525,8 @@
     "show": "Visible",
     "hide": "Masqué",
     "reset": "Réinitialiser",
-    "aboutDescription1": "Fondée et dirigée par <strong>Richard Bunani</strong>, la Concession Mugogo est une exploitation agro-pastorale intégrée située à <strong>Walungu, dans le Sud-Kivu</strong>, en République Démocratique du Congo."
+    "aboutDescription1": "Fondée et dirigée par <strong>Richard Bunani</strong>, la Concession Mugogo est une exploitation agro-pastorale intégrée située à <strong>Walungu, dans le Sud-Kivu</strong>, en République Démocratique du Congo.",
+    "aboutDesc2short": "L'exploitation couvre"
   },
   "home": {
     "tagline": "Gestion Agro-pastorale Intégrée",
@@ -555,7 +557,7 @@
     "contentLabel": "Description / Observations",
     "sent": "Rapport envoyé",
     "sentDesc": "Richard Bunani a été notifié",
-    "newReport": "Nouveau rapport",
+    "newReport": "Envoyer un autre rapport",
     "close": "Fermer",
     "recording": "Enregistrement en cours",
     "startRecord": "Démarrer l'enregistrement",
@@ -564,7 +566,9 @@
     "features": "Fonctionnalités",
     "about": "À propos",
     "contact": "Contact",
-    "login": "Connexion"
+    "login": "Connexion",
+    "heroLine1": "Bienvenue sur le système de la",
+    "heroManage": "Gérez votre exploitation agro-pastorale"
   },
   "months": {
     "jan": "Jan",

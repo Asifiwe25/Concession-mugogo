@@ -201,7 +201,7 @@ function PublicReportForm() {
       </p>
       <button onClick={() => { setSent(false); setTitle(''); setContent(''); setName(''); setRole(''); setFile(null); setStatus('idle'); setRecTime(0) }}
         style={{ padding: '10px 24px', borderRadius: '11px', background: 'var(--accent)', color: 'white', border: 'none', fontSize: '.9rem', fontWeight: 700, cursor: 'pointer' }}>
-        Envoyer un autre rapport
+        {'Envoyer un autre rapport'}
       </button>
     </div>
   )
@@ -546,7 +546,7 @@ export default function HomePage() {
           </div>
         </div>
         <div style={{ display: 'flex', gap: '7px', alignItems: 'center' }}>
-          <button className="nav-btn-ghost" onClick={() => scrollToReport('text')}>Envoyer un rapport</button>
+          <button className="nav-btn-ghost" onClick={() => scrollToReport('text')}>{t('home.sendReport','Envoyer un rapport')}</button>
           <button className="nav-btn-ghost" onClick={() => navigate('/connexion')}>{t('auth.login','Connexion')}</button>
           <button className="nav-btn-solid" onClick={() => navigate('/connexion')}>Accès ERP</button>
         </div>
@@ -567,12 +567,12 @@ export default function HomePage() {
             <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--b700)' }}>Système ERP Agro-pastoral — Walungu, Sud-Kivu, RDC</span>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--b700)' }}>{t('app.tagline','Système ERP Agro-pastoral')} — Walungu, Sud-Kivu, RDC</span>
           </div>
 
           {/* Headline */}
           <h1 className="h1" style={{ fontFamily: 'Georgia,serif', fontSize: 'clamp(2.2rem,5.5vw,4.2rem)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.1, marginBottom: '.5rem', letterSpacing: '-.025em' }}>
-            Bienvenue sur le système de la
+            {t('home.heroLine1','Bienvenue sur le système de la')}
           </h1>
           <h1 className="h2" style={{ fontFamily: 'Georgia,serif', fontSize: 'clamp(2.2rem,5.5vw,4.2rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '1.375rem', letterSpacing: '-.025em' }}>
             <span style={{ color: 'var(--accent)', position: 'relative', display: 'inline-block' }}>
@@ -585,7 +585,7 @@ export default function HomePage() {
 
           {/* Typewriter subtitle */}
           <p className="h3" style={{ fontSize: 'clamp(1rem,2vw,1.25rem)', color: 'var(--muted)', lineHeight: 1.7, maxWidth: '660px', margin: '0 auto 2.25rem' }}>
-            Gérez votre exploitation agro-pastorale —{' '}
+            {t('home.heroManage','Gérez votre exploitation agro-pastorale')} —{' '}
             <TypeWriter words={[t('nav.livestock','élevage')+'  & cheptel', t('nav.crops','cultures')+' & récoltes', 'finances & RH', t('nav.stock','stock')+' & alertes', 'rapports PDF & Word']} speed={70}/>
             <br/>
             <span style={{ color: 'var(--b500)', fontSize: '.9em' }}>9 hectares · Richard Bunani · Walungu</span>
@@ -617,7 +617,7 @@ export default function HomePage() {
 
         {/* Scroll hint */}
         <div style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', opacity: .45 }}>
-          <span style={{ fontSize: '.72rem', color: 'var(--light)', textTransform: 'uppercase', letterSpacing: '.1em' }}>Découvrir</span>
+          <span style={{ fontSize: '.72rem', color: 'var(--light)', textTransform: 'uppercase', letterSpacing: '.1em' }}>{t('home.scrollDown','Découvrir')}</span>
           <ChevronDown size={17} style={{ color: 'var(--light)', animation: 'pfloat 1.5s ease-in-out infinite' }}/>
         </div>
       </section>
@@ -627,7 +627,7 @@ export default function HomePage() {
         <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
           <div className="anim-fade-up">
             <div style={{ display: 'inline-block', background: 'var(--b100)', color: 'var(--b700)', fontSize: '10px', fontWeight: 700, padding: '4px 12px', borderRadius: '99px', border: '1px solid var(--b200)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '.07em' }}>
-              À propos
+              {t('home.about','À propos')}
             </div>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 'clamp(1.6rem,3.5vw,2.5rem)', fontWeight: 700, color: 'var(--text)', marginBottom: '1.125rem', lineHeight: 1.2 }}>
               {homeContent.aboutTitle}
@@ -636,7 +636,7 @@ export default function HomePage() {
               <span dangerouslySetInnerHTML={{__html: t("homepage.aboutDescription1","Fondée et dirigée par <strong>Richard Bunani</strong>, la Concession Mugogo est une exploitation agro-pastorale intégrée située à <strong>Walungu, dans le Sud-Kivu</strong>, en République Démocratique du Congo.")}}/>
             </p>
             <p style={{ fontSize: '.95rem', color: 'var(--muted)', lineHeight: 1.75, marginBottom: '1.75rem' }}>
-              L'exploitation couvre <strong style={{ color: 'var(--text)' }}>9 hectares</strong> de terres agricoles et pastorales, avec un cheptel de bovins Ankole, caprins, volailles et porcins, ainsi que des cultures de maïs, pommes de terre et haricots.
+              {t('homepage.aboutDesc2short','L\'exploitation couvre')} <strong style={{ color: 'var(--text)' }}>9 hectares</strong> de terres agricoles et pastorales, avec un cheptel de bovins Ankole, caprins, volailles et porcins, ainsi que des cultures de maïs, pommes de terre et haricots.
             </p>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               {[
@@ -758,7 +758,7 @@ export default function HomePage() {
               Envoi de rapports — Accès libre
             </div>
             <h2 className="anim-fade-up" style={{ fontFamily: 'Georgia,serif', fontSize: 'clamp(1.7rem,4vw,2.75rem)', fontWeight: 700, color: 'var(--text)', marginBottom: '1rem' }}>
-              Envoyez votre rapport à Richard Bunani
+              {t('home.reportTitle','Envoyez votre rapport à Richard Bunani')}
             </h2>
             <p style={{ fontSize: '1rem', color: 'var(--muted)', maxWidth: '600px', margin: '0 auto', lineHeight: 1.65 }}>
               Rapport écrit, message vocal ou vidéo — <strong>sans connexion requise.</strong><br/>
@@ -920,7 +920,7 @@ export default function HomePage() {
           <div className="anim-fade-up d3" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <MagneticBtn onClick={() => navigate('/connexion')}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 28px', borderRadius: '12px', background: 'var(--b50)', color: 'var(--b800)', border: 'none', fontSize: '1rem', fontWeight: 700 }}>
-              Se connecter <ArrowRight size={17}/>
+              {t('home.ctaBtn1','Se connecter')} <ArrowRight size={17}/>
             </MagneticBtn>
             <MagneticBtn onClick={() => navigate('/inscription')}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 24px', borderRadius: '12px', background: 'rgba(255,255,255,.1)', color: 'white', border: '1px solid rgba(255,255,255,.22)', fontSize: '1rem', fontWeight: 600 }}>
@@ -950,7 +950,7 @@ export default function HomePage() {
             </div>
             <div>
               <span style={{ fontFamily: 'Georgia,serif', fontSize: '12.5px', fontWeight: 700, color: 'var(--b400)' }}>Concession Mugogo</span>
-              <span style={{ fontSize: '10px', color: 'var(--b600)', marginLeft: '6px' }}>Walungu, Sud-Kivu, RDC</span>
+              <span style={{ fontSize: '10px', color: 'var(--b600)', marginLeft: '6px' }}>{t('app.subtitle','Walungu, Sud-Kivu, RDC')}</span>
             </div>
           </div>
           <p style={{ fontSize: '11px', color: 'var(--b600)' }}>© 2025 — Propriété de Richard Bunani — {t('home.footerRights','Tous droits réservés')}</p>

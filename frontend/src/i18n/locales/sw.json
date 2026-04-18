@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "Concession Mugogo",
-    "tagline": "Usimamizi wa Kilimo Jumuishi"
+    "tagline": "Usimamizi wa Kilimo Jumuishi",
+    "subtitle": "Walungu, Kivu Kusini, DRC"
   },
   "nav": {
     "dashboard": "Dashibodi",
@@ -524,7 +525,8 @@
     "hide": "Ficha",
     "cta": "Wito wa kuchukua hatua",
     "reset": "Weka upya",
-    "aboutDescription1": "Ilianzishwa na kusimamia na <strong>Richard Bunani</strong>, Concession Mugogo ni shamba jumuishi la kilimo na ufugaji lililoko <strong>Walungu, Kivu Kusini</strong>, Jamhuri ya Kidemokrasia ya Congo."
+    "aboutDescription1": "Ilianzishwa na kusimamia na <strong>Richard Bunani</strong>, Concession Mugogo ni shamba jumuishi la kilimo na ufugaji lililoko <strong>Walungu, Kivu Kusini</strong>, Jamhuri ya Kidemokrasia ya Congo.",
+    "aboutDesc2short": "Shamba linashughulikia"
   },
   "home": {
     "tagline": "Usimamizi Jumuishi wa Kilimo na Ufugaji",
@@ -555,7 +557,7 @@
     "contentLabel": "Maelezo / Uchunguzi",
     "sent": "Ripoti imetumwa",
     "sentDesc": "Richard Bunani amearifiwa",
-    "newReport": "Ripoti mpya",
+    "newReport": "Tuma ripoti nyingine",
     "close": "Funga",
     "recording": "Kurekodi kunaendelea",
     "startRecord": "Anza kurekodi",
@@ -564,7 +566,9 @@
     "features": "Vipengele",
     "about": "Kuhusu",
     "contact": "Mawasiliano",
-    "login": "Ingia"
+    "login": "Ingia",
+    "heroLine1": "Karibu kwenye mfumo wa usimamizi wa",
+    "heroManage": "Simamia shamba lako la kilimo na ufugaji"
   },
   "months": {
     "jan": "Jan",

@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "Concession Mugogo",
-    "tagline": "Integrated Agro-pastoral Management"
+    "tagline": "Integrated Agro-pastoral Management",
+    "subtitle": "Walungu, South Kivu, DRC"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -524,7 +525,8 @@
     "hide": "Hidden",
     "cta": "Appel à l'action",
     "reset": "Réinitialiser",
-    "aboutDescription1": "Founded and managed by <strong>Richard Bunani</strong>, Concession Mugogo is an integrated agro-pastoral farm located in <strong>Walungu, South Kivu</strong>, Democratic Republic of Congo."
+    "aboutDescription1": "Founded and managed by <strong>Richard Bunani</strong>, Concession Mugogo is an integrated agro-pastoral farm located in <strong>Walungu, South Kivu</strong>, Democratic Republic of Congo.",
+    "aboutDesc2short": "The farm covers"
   },
   "home": {
     "tagline": "Integrated Agro-pastoral Management",
@@ -555,7 +557,7 @@
     "contentLabel": "Description / Observations",
     "sent": "Report sent",
     "sentDesc": "Richard Bunani has been notified",
-    "newReport": "New report",
+    "newReport": "Send another report",
     "close": "Close",
     "recording": "Recording in progress",
     "startRecord": "Start recording",
@@ -564,7 +566,9 @@
     "features": "Features",
     "about": "About",
     "contact": "Contact",
-    "login": "Sign in"
+    "login": "Sign in",
+    "heroLine1": "Welcome to the management system of",
+    "heroManage": "Manage your agro-pastoral farm"
   },
   "months": {
     "jan": "Jan",

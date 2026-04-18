@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "Concession Mugogo",
-    "tagline": "Busimamizi bw'Ukulima"
+    "tagline": "Busimamizi bw'Ukulima",
+    "subtitle": "Walungu, Sud-Kivu, RDC"
   },
   "nav": {
     "dashboard": "Ikiongozi",
@@ -524,7 +525,8 @@
     "hide": "Hisha",
     "cta": "Ihamagarizo ry'igikorwa",
     "reset": "Subira aho wahetse",
-    "aboutDescription1": "Yashinzwe kandi ikosozwa na <strong>Richard Bunani</strong>, Concession Mugogo ni ikirima cy'ubuhinzi n'amasho gisangiye kiri <strong>Walungu, Sud-Kivu</strong>, mu Rwanda wa Congo."
+    "aboutDescription1": "Yashinzwe kandi ikosozwa na <strong>Richard Bunani</strong>, Concession Mugogo ni ikirima cy'ubuhinzi n'amasho gisangiye kiri <strong>Walungu, Sud-Kivu</strong>, mu Rwanda wa Congo.",
+    "aboutDesc2short": "Ikirima gifite"
   },
   "home": {
     "tagline": "Busimamizi bw'Ukulima n'Amasho",
@@ -555,7 +557,7 @@
     "contentLabel": "Ibisobanuro / Ibigaragara",
     "sent": "Raporo yoherejwe",
     "sentDesc": "Richard Bunani ahamagarijwe",
-    "newReport": "Raporo nshya",
+    "newReport": "Ohereza raporo nshya",
     "close": "Funga",
     "recording": "Kwandika birakora",
     "startRecord": "Tangira kwandika",
@@ -564,7 +566,9 @@
     "features": "Ibintu bihariye",
     "about": "Aho tutuye",
     "contact": "Kuvugana",
-    "login": "Injira"
+    "login": "Injira",
+    "heroLine1": "Murakaza neza mu sisitemu y'ikirima cya",
+    "heroManage": "Cunga ikirima cyawe cy'ubuhinzi n'amasho"
   },
   "months": {
     "jan": "Jan",
