@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import { useLang } from '@/context/LanguageContext'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock, CheckCircle, Loader2, AlertCircle } from 'lucide-react'
@@ -24,6 +26,7 @@ const LANGS = [
 type Step = 1 | 2 | 3
 
 export default function RegisterPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { login } = useAuthStore()
   const [step, setStep]       = useState<Step>(1)

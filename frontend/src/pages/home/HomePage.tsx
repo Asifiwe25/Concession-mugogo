@@ -194,7 +194,7 @@ function PublicReportForm() {
       <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'var(--okBg)', border: '2px solid var(--ok)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', animation: 'scaleIn .4s cubic-bezier(.34,1.56,.64,1)' }}>
         <CheckCircle size={30} style={{ color: 'var(--ok)' }}/>
       </div>
-      <h3 style={{ fontFamily: 'Georgia,serif', fontSize: '1.5rem', fontWeight: 700, marginBottom: '.625rem', color: 'var(--text)' }}>Rapport envoyé</h3>
+      <h3 style={{ fontFamily: 'Georgia,serif', fontSize: '1.5rem', fontWeight: 700, marginBottom: '.625rem', color: 'var(--text)' }}>{'Rapport envoyé'}</h3>
       <p style={{ fontSize: '.9rem', color: 'var(--muted)', lineHeight: 1.65, marginBottom: '1.5rem' }}>
         Votre rapport a été transmis à <strong style={{ color: 'var(--text)' }}>Richard Bunani</strong>.<br/>
         Il le recevra sur son tableau de bord, WhatsApp et email.
@@ -459,6 +459,7 @@ export default function HomePage() {
   const [activeTest, setActiveTest] = useState(0)
   const [reportOpen, setReportOpen] = useState(false)
   const { lang: currentLang, setLang } = useLang()
+  const { t } = useTranslation()
   const [reportType, setReportType] = useState<RType>('text')
   const reportRef = useRef<HTMLDivElement>(null)
 
@@ -546,7 +547,7 @@ export default function HomePage() {
         </div>
         <div style={{ display: 'flex', gap: '7px', alignItems: 'center' }}>
           <button className="nav-btn-ghost" onClick={() => scrollToReport('text')}>Envoyer un rapport</button>
-          <button className="nav-btn-ghost" onClick={() => navigate('/connexion')}>Connexion</button>
+          <button className="nav-btn-ghost" onClick={() => navigate('/connexion')}>{t('auth.login','Connexion')}</button>
           <button className="nav-btn-solid" onClick={() => navigate('/connexion')}>Accès ERP</button>
         </div>
       </nav>
@@ -585,7 +586,7 @@ export default function HomePage() {
           {/* Typewriter subtitle */}
           <p className="h3" style={{ fontSize: 'clamp(1rem,2vw,1.25rem)', color: 'var(--muted)', lineHeight: 1.7, maxWidth: '660px', margin: '0 auto 2.25rem' }}>
             Gérez votre exploitation agro-pastorale —{' '}
-            <TypeWriter words={['élevage & cheptel', 'cultures & récoltes', 'finances & RH', 'stock & alertes', 'rapports PDF & Word']} speed={70}/>
+            <TypeWriter words={[t('nav.livestock','élevage')+'  & cheptel', t('nav.crops','cultures')+' & récoltes', 'finances & RH', t('nav.stock','stock')+' & alertes', 'rapports PDF & Word']} speed={70}/>
             <br/>
             <span style={{ color: 'var(--b500)', fontSize: '.9em' }}>9 hectares · Richard Bunani · Walungu</span>
           </p>
@@ -632,7 +633,7 @@ export default function HomePage() {
               {homeContent.aboutTitle}
             </h2>
             <p style={{ fontSize: '.95rem', color: 'var(--muted)', lineHeight: 1.75, marginBottom: '1.25rem' }}>
-              Fondée et dirigée par <strong style={{ color: 'var(--text)' }}>Richard Bunani</strong>, la Concession Mugogo est une exploitation agro-pastorale intégrée située à <strong>Walungu, dans le Sud-Kivu</strong>, en République Démocratique du Congo.
+              <span dangerouslySetInnerHTML={{__html: t("homepage.aboutDescription1","Fondée et dirigée par <strong>Richard Bunani</strong>, la Concession Mugogo est une exploitation agro-pastorale intégrée située à <strong>Walungu, dans le Sud-Kivu</strong>, en République Démocratique du Congo.")}}/>
             </p>
             <p style={{ fontSize: '.95rem', color: 'var(--muted)', lineHeight: 1.75, marginBottom: '1.75rem' }}>
               L'exploitation couvre <strong style={{ color: 'var(--text)' }}>9 hectares</strong> de terres agricoles et pastorales, avec un cheptel de bovins Ankole, caprins, volailles et porcins, ainsi que des cultures de maïs, pommes de terre et haricots.
@@ -641,7 +642,7 @@ export default function HomePage() {
               {[
                 { label: 'Propriétaire',  value: 'Richard Bunani' },
                 { label: 'Localisation', value: 'Walungu, Sud-Kivu' },
-                { label: 'Contact',       value: '+243 976960983' },
+                { label: t('home.contact','Contact'),       value: '+243 976960983' },
               ].map((s, i) => (
                 <div key={i} style={{ background: 'var(--b100)', borderRadius: '12px', padding: '10px 14px', border: '1px solid var(--b200)' }}>
                   <p style={{ fontSize: '.72rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 700, marginBottom: '2px' }}>{s.label}</p>
@@ -731,7 +732,7 @@ export default function HomePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
             {[
               { num: '01', title: 'Connexion sécurisée',  desc: 'Richard Bunani crée votre compte avec le rôle adapté. Chaque employé accède uniquement à son périmètre.', icon: Shield },
-              { num: '02', title: 'Saisie des données',   desc: 'Enregistrez animaux, cultures, stocks et transactions. Les formulaires guidés facilitent la saisie sur le terrain.', icon: BarChart3 },
+              { num: '02', title: t('dashboard.quickActions','Saisie des données'), desc: t('nav.livestock','Enregistrez animaux, cultures, stocks et transactions.'), icon: BarChart3 },
               { num: '03', title: 'Suivi & Décisions',    desc: 'Tableau de bord temps réel, alertes automatiques, rapports PDF/Word téléchargeables. Toute la concession sous contrôle.', icon: TrendingUp },
             ].map((step, i) => (
               <div key={i} className="anim-fade-up" style={{ animationDelay: `${i * .12}s`, background: 'white', borderRadius: '20px', padding: '1.875rem', border: '1px solid var(--borderS)', boxShadow: '0 2px 12px rgba(46,31,16,.05)' }}>
@@ -952,7 +953,7 @@ export default function HomePage() {
               <span style={{ fontSize: '10px', color: 'var(--b600)', marginLeft: '6px' }}>Walungu, Sud-Kivu, RDC</span>
             </div>
           </div>
-          <p style={{ fontSize: '11px', color: 'var(--b600)' }}>© 2025 — Propriété de Richard Bunani — Tous droits réservés</p>
+          <p style={{ fontSize: '11px', color: 'var(--b600)' }}>© 2025 — Propriété de Richard Bunani — {t('home.footerRights','Tous droits réservés')}</p>
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
             {[{c:'fr',l:'FR'},{c:'en',l:'EN'},{c:'sw',l:'SW'},{c:'mashi',l:'SH'}].map(({c,l}) => (
               <span key={c} onClick={() => { setLang(c) }}

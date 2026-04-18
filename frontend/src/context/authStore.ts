@@ -12,27 +12,26 @@ export interface User {
   role: Role
   language: 'fr' | 'en' | 'sw' | 'mashi'
   avatar?: string
-  concessionId?: string
   lastLogin?: string
-  sessionExpiry?: number
 }
 
-const SESSION_DURATION = 8 * 60 * 60 * 1000
+// Safe localStorage helpers — never throw on Vercel
+function lsGet(key: string): string | null {
+  try { return typeof window !== 'undefined' ? window.localStorage.getItem(key) : null }
+  catch { return null }
+}
+function lsSet(key: string, val: string) {
+  try { typeof window !== 'undefined' && window.localStorage.setItem(key, val) } catch {}
+}
+function lsDel(key: string) {
+  try { typeof window !== 'undefined' && window.localStorage.removeItem(key) } catch {}
+}
 
-// Simple session check - no expiry on Vercel to avoid issues
 function getStoredUser(): User | null {
-  try {
-    const stored = localStorage.getItem('mugogo_user')
-    const token  = localStorage.getItem('mugogo_token')
-    if (!stored || !token) return null
-    return JSON.parse(stored) as User
-  } catch { return null }
-}
-
-function clearSession() {
-  localStorage.removeItem('mugogo_token')
-  localStorage.removeItem('mugogo_user')
-  localStorage.removeItem('mugogo_session_expiry')
+  const stored = lsGet('mugogo_user')
+  const token  = lsGet('mugogo_token')
+  if (!stored || !token) return null
+  try { return JSON.parse(stored) as User } catch { return null }
 }
 
 interface AuthState {
@@ -46,25 +45,26 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user:            getStoredUser(),
-  token:           localStorage.getItem('mugogo_token'),
-  isAuthenticated: !!localStorage.getItem('mugogo_token') && !!localStorage.getItem('mugogo_user'),
+  token:           lsGet('mugogo_token'),
+  isAuthenticated: !!(lsGet('mugogo_token') && lsGet('mugogo_user')),
 
   login: (user, token) => {
-    localStorage.setItem('mugogo_token', token)
-    localStorage.setItem('mugogo_user', JSON.stringify({ ...user, lastLogin: new Date().toISOString() }))
-    localStorage.setItem('mugogo_lang', user.language || 'fr')
+    lsSet('mugogo_token', token)
+    lsSet('mugogo_user', JSON.stringify({ ...user, lastLogin: new Date().toISOString() }))
+    lsSet('mugogo_lang', user.language || 'fr')
     set({ user: { ...user, lastLogin: new Date().toISOString() }, token, isAuthenticated: true })
   },
 
   logout: () => {
-    clearSession()
+    lsDel('mugogo_token')
+    lsDel('mugogo_user')
+    lsDel('mugogo_session_expiry')
     set({ user: null, token: null, isAuthenticated: false })
   },
 
-  updateUser: (updates) =>
-    set((state) => {
-      const updated = state.user ? { ...state.user, ...updates } : null
-      if (updated) localStorage.setItem('mugogo_user', JSON.stringify(updated))
-      return { user: updated }
-    }),
+  updateUser: (updates) => set((state) => {
+    const updated = state.user ? { ...state.user, ...updates } : null
+    if (updated) lsSet('mugogo_user', JSON.stringify(updated))
+    return { user: updated }
+  }),
 }))

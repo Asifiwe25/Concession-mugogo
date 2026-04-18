@@ -35,7 +35,7 @@ export default function DashboardPage() {
   const pendingReqs = accessRequests.filter(r=>r.status==='pending').length
 
   const monthData = [
-    { name:'Jan', rev:2400, dep:1800 }, { name:'Fév', rev:1800, dep:1200 },
+    { name:t('months.jan','Jan'), rev:2400, dep:1800 }, { name:t('months.feb','Fév'), rev:1800, dep:1200 },
     { name:'Mar', rev:3200, dep:2100 }, { name:'Avr', rev:2800, dep:1900 },
     { name:'Mai', rev:3800, dep:2400 }, { name:'Juin', rev:4200, dep:2800 },
     { name:'Juil', rev:3600, dep:2200 }, { name:'Août', rev:4800, dep:3100 },
@@ -44,13 +44,13 @@ export default function DashboardPage() {
   ]
 
   const reportData = [
-    { label: t('dashboard.animals','Animaux'), valeur: animals.length, status: sickAnimals > 0 ? `${sickAnimals} malades` : 'tous en bonne santé' },
-    { label: t('dashboard.employees','Employés actifs'), valeur: activeEmp, status: `${employees.length} total` },
-    { label: t('dashboard.revenue','Revenus'), valeur: `$${Math.round(rev)}`, status: `profit $${Math.round(profit)}` },
+    { label: t('dashboard.animals','Animaux'), valeur: animals.length, status: sickAnimals > 0 ? `${sickAnimals} ${t('livestock.sick','malades')}` : t('common.success','Tous en bonne santé') },
+    { label: t('dashboard.employees','Employés actifs'), valeur: activeEmp, status: `${employees.length} ${t('common.total','total')}` },
+    { label: t('dashboard.revenue','Revenus'), valeur: `$${Math.round(rev)}`, status: `${t('dashboard.profit','bénéfice')} $${Math.round(profit)}` },
     { label: t('dashboard.expenses','Dépenses'), valeur: `$${Math.round(exp)}`, status: `${((exp/(rev||1))*100).toFixed(0)}% des revenus` },
-    { label: t('nav.alerts','Alertes'), valeur: newAlerts, status: `${critAlerts} critiques` },
-    { label: t('crops.title','Cultures prêtes'), valeur: readyCrops, status: `sur ${crops.length} total` },
-    { label: t('stock.title','Stock critique'), valeur: critStock, status: `sur ${stock.length} articles` },
+    { label: t('nav.alerts','Alertes'), valeur: newAlerts, status: `${critAlerts} ${t('alerts.critical','critiques')}` },
+    { label: t('crops.title','Cultures prêtes'), valeur: readyCrops, status: `${t('common.of','sur')} ${crops.length} ${t('common.total','total')}` },
+    { label: t('stock.title','Stock critique'), valeur: critStock, status: `${t('common.of','sur')} ${stock.length} ${t('common.total','articles')}` },
     { label: t('nav.reports','Rapports non lus'), valeur: unread, status: `${fieldReports.length} total` },
   ]
 
@@ -126,7 +126,7 @@ export default function DashboardPage() {
       )}
 
       {/* KPI Cards */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))', gap:'10px' }}>
+      <div className="kpi-grid-tablet" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(150px,1fr))', gap:'10px' }}>
         {[
           { label:t('dashboard.animals','Animaux'), value:animals.length, sub:`${sickAnimals} ${t('livestock.sick','malades')}`, color:'var(--b600)', delay:'.05s', click:'/elevage' },
           { label:t('dashboard.employees','Employés'), value:activeEmp, sub:`${employees.length} ${t('common.total','total')}`, color:'var(--ok)', delay:'.10s', click:'/employes' },
@@ -145,7 +145,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Chart + Quick actions */}
-      <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:'1rem' }}>
+      <div className="dashboard-grid-2" style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:'1rem' }}>
         <div className="card">
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'1rem' }}>
             <h3 style={{ fontFamily:'Georgia,serif', fontWeight:700, fontSize:'1rem' }}>{t('dashboard.productionChart','Production mensuelle')}</h3>
@@ -192,7 +192,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Recent Alerts + Stock Critical + Animals + Crops */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1rem' }}>
+      <div className="dashboard-grid-4" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1rem' }}>
         {/* Alerts */}
         <div className="card">
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'.875rem' }}>

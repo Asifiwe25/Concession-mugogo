@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import { useLang } from '@/context/LanguageContext'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Mail, CheckCircle, Loader2, AlertCircle, Lock, Eye, EyeOff } from 'lucide-react'
@@ -5,6 +7,7 @@ import { ArrowLeft, Mail, CheckCircle, Loader2, AlertCircle, Lock, Eye, EyeOff }
 type View = 'email' | 'code' | 'reset' | 'success'
 
 export default function ForgotPasswordPage() {
+  const { t } = useTranslation()
   const [view,  setView]  = useState<View>('email')
   const [email, setEmail] = useState('')
   const [code,  setCode]  = useState(['', '', '', '', '', ''])

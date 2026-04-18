@@ -18,6 +18,7 @@ import ConcessionsPage from '@/pages/concessions/ConcessionsPage'
 import { HarvestsPage, MachinesPage, ReportsPage, SettingsPage, AuditPage } from '@/pages/shared/AllPages'
 import HomeAdminPage from '@/pages/homeadmin/HomeAdminPage'
 import { useAuthStore } from '@/context/authStore'
+import { useLang } from '@/context/LanguageContext'
 
 function Guard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuthStore()
@@ -33,23 +34,18 @@ function AdminOnly({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
 
-function PublicOnly({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuthStore()
-  if (isAuthenticated) return <Navigate to="/tableau-de-bord" replace />
-  return <>{children}</>
-}
-
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public */}
-        <Route path="/"                        element={<HomePage />} />
-        <Route path="/connexion"               element={<PublicOnly><LoginPage /></PublicOnly>} />
-        <Route path="/inscription"             element={<PublicOnly><RegisterPage /></PublicOnly>} />
-        <Route path="/mot-de-passe-oublie"     element={<PublicOnly><ForgotPasswordPage /></PublicOnly>} />
+  const { lang } = useLang()
 
-        {/* Protected — inside Layout */}
+  return (
+    // key={lang} forces full re-render on language change — this is what makes ALL text change
+    <BrowserRouter key={lang}>
+      <Routes>
+        <Route path="/"                    element={<HomePage />} />
+        <Route path="/connexion"           element={<LoginPage />} />
+        <Route path="/inscription"         element={<RegisterPage />} />
+        <Route path="/mot-de-passe-oublie" element={<ForgotPasswordPage />} />
+
         <Route element={<Guard><Layout /></Guard>}>
           <Route path="/tableau-de-bord"  element={<DashboardPage />} />
           <Route path="/employes"         element={<EmployeesPage />} />

@@ -629,6 +629,7 @@ function FieldReportForm({ onClose }: { onClose:()=>void }) {
 }
 
 export function ReportsPage() {
+  const { t } = useTranslation()
   const { user } = useAuthStore()
   const { fieldReports, markReportRead, archiveReport, deleteReport } = useExtraStore()
   const isAdmin = user?.role === 'super_admin' || user?.role === 'director'

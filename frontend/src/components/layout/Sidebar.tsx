@@ -12,7 +12,7 @@ import { useStore } from '@/store/useStore'
 import { LangSwitcher } from '@/context/LanguageContext'
 import { MugogoLogo } from '@/components/ui/MugogoLogo'
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const { t } = useTranslation()
   const { user, logout } = useAuthStore()
   const { alerts } = useStore()
@@ -77,7 +77,7 @@ export default function Sidebar() {
 
       {/* Logo */}
       <div style={{ padding: '16px 14px 12px', borderBottom: '1px solid var(--borderS)' }}>
-        <MugogoLogo size={34} withText textColor="var(--text)"/>
+        <MugogoLogo size={34} withText textColor="#2e1f10"/>
         <div style={{ marginTop: '5px', fontSize: '10px', color: 'var(--light)', fontStyle: 'italic', paddingLeft: '44px' }}>
           Walungu, Sud-Kivu, RDC
         </div>
@@ -94,7 +94,7 @@ export default function Sidebar() {
             )}
             {group.items.map(item => (
               <NavLink key={item.to} to={item.to}
-                className={({ isActive }) => clsx('nav-link', isActive && 'active')}>
+                className={({ isActive }) => clsx('nav-link', isActive && 'active')} onClick={onClose}>
                 <item.icon size={15} style={{ flexShrink: 0, strokeWidth: 1.9 }}/>
                 <span style={{ flex: 1 }}>{t(item.labelKey, item.labelKey)}</span>
                 {(item as any).badge && newAlerts > 0 && (
@@ -115,7 +115,7 @@ export default function Sidebar() {
         <LangSwitcher style={{ marginBottom: '8px' }}/>
 
         {/* Home button */}
-        <button onClick={() => navigate('/')}
+        <button onClick={() => { navigate('/'); onClose?.() }}
           style={{ display: 'flex', alignItems: 'center', gap: '7px', width: '100%', padding: '7px 9px', borderRadius: '9px', border: '1px solid var(--borderS)', background: 'var(--surface2)', cursor: 'pointer', marginBottom: '8px', fontSize: '11.5px', color: 'var(--muted)', transition: 'all .13s' }}
           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--accentS)'; (e.currentTarget as HTMLElement).style.color = 'var(--accent)'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)' }}
           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'var(--surface2)'; (e.currentTarget as HTMLElement).style.color = 'var(--muted)'; (e.currentTarget as HTMLElement).style.borderColor = 'var(--borderS)' }}>
