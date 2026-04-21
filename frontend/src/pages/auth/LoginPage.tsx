@@ -69,7 +69,7 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     if (locked) return
-    if (!email.trim() || !password) { doShake(); return }
+    if (!email.trim() || !password.trim()) { doShake(); return }
     setLoading(true); setError('')
     await new Promise(r => setTimeout(r, 400))
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
     let found: any = null
 
     // Check admin — hardcoded, works 100% on Vercel
-    if (em === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD) {
+    if (em === ADMIN_EMAIL.toLowerCase() && password.trim() === ADMIN_PASSWORD) {
       found = { ...ADMIN_USER, language: lang as any }
     }
 
@@ -190,7 +190,7 @@ export default function LoginPage() {
               <label style={{ display:'block', fontSize:'.73rem', fontWeight:700, color:'var(--muted)', marginBottom:'.3rem', textTransform:'uppercase', letterSpacing:'.04em' }}>{L.email}</label>
               <div style={{ position:'relative' }}>
                 <Mail size={14} className="ico"/>
-                <input ref={emailRef} type="email" value={email} placeholder="richardbunani2013@gmail.com" autoComplete="email"
+                <input ref={emailRef} type="text" value={email} placeholder="richardbunani2013@gmail.com" autoComplete="email" autoCapitalize="none" autoCorrect="off" spellCheck={false}
                   onChange={e => { setEmail(e.target.value); setError('') }}
                   className="inp"/>
               </div>
